@@ -19,18 +19,18 @@
 <textarea id="outarea" rows="20" cols="40" spellcheck="false" autocomplete="off" style="font-family: Times New Roman;font-size:1.1em;background-color: white;" disabled></textarea>
 <textarea id="descarea" rows="20" cols="50" style="font-family: Courier;font-size:1.0em;" disabled>
 《入力方法》
-  a  a     b  b     r  ɹ     !V  母音全般
-  {  æ     d  d     s  s     !C  子音全般
-  V  ʌ     D  ð     S  ʃ     !R  /l/, /ɹ/
-  A  ɑ     f  f     Z  ʒ     !D  /d/, /ð/, /z/
-  E  ɝ     g  ɡ     t  t     !T  /t/, /θ/, /s/
-  e  e     h  h     T  θ    !B  /b/, /v/
-  E  ɛ     j  j     v  v     
-  i  i     k  k     w  w     !A  「ア」っぽい音
-  I  ɪ     l  l     z  z     !E  「エ」っぽい音
-  o  o     m  m              !I  「イ」っぽい音
-  O  ɔ     n  n              !O  「オ」っぽい音
-  u  u     N  ŋ              !U  「ウ」っぽい音
+  a  a     b  b     r  ɹ     @   母音全般
+  {  æ     d  d     s  s     #   子音全般
+  V  ʌ     D  ð     S  ʃ     1   「ア」っぽい音
+  A  ɑ     f  f     Z  ʒ     2   「イ」っぽい音
+  E  ɝ     g  ɡ     t  t     3   「ウ」っぽい音
+  e  e     h  h     T  θ    4   「エ」っぽい音
+  E  ɛ     j  j     v  v     5   「オ」っぽい音
+  i  i     k  k     w  w     6   /l/, /ɹ/
+  I  ɪ     l  l     z  z     7   /d/, /ð/, /z/
+  o  o     m  m              8   /t/, /θ/, /s/
+  O  ɔ     n  n              9   /b/, /v/
+  u  u     N  ŋ              0   /m/, /n/, /ŋ/
   U  ʊ     p  p     
 </textarea>
 
@@ -50,9 +50,10 @@ const osic = "[ʌɝɔoʊ]+";
 const usic = "[uʊ]+";
 
 const lrobfuscator = "[lɹ]";
-const tTobfuscator = "[tθs]"
-const dDobfuscator = "[dðz]"
-const bVobfuscator = "[bv]"
+const tTobfuscator = "[tθs]";
+const dDobfuscator = "[dðz]";
+const bVobfuscator = "[bv]";
+const nNobfuscator = "[mnŋ]";
 
 const prefix = "^";
 const suffix = "$";
@@ -94,17 +95,18 @@ function displaySampa(text) {
 }
 
 function convert(text) {
-    text = text.replaceAll("!V", vowels);
-    text = text.replaceAll("!C", consonants);
-    text = text.replaceAll("!R", lrobfuscator);
-    text = text.replaceAll("!D", dDobfuscator);
-    text = text.replaceAll("!T", tTobfuscator);
-    text = text.replaceAll("!B", bVobfuscator);
-    text = text.replaceAll("!A", asic);
-    text = text.replaceAll("!E", esic);
-    text = text.replaceAll("!I", isic);
-    text = text.replaceAll("!O", osic);
-    text = text.replaceAll("!U", usic);
+    text = text.replaceAll("@", vowels);
+    text = text.replaceAll("#", consonants);
+    text = text.replaceAll("6", lrobfuscator);
+    text = text.replaceAll("7", dDobfuscator);
+    text = text.replaceAll("8", tTobfuscator);
+    text = text.replaceAll("9", bVobfuscator);
+    text = text.replaceAll("0", nNobfuscator);
+    text = text.replaceAll("1", asic);
+    text = text.replaceAll("2", isic);
+    text = text.replaceAll("3", usic);
+    text = text.replaceAll("4", esic);
+    text = text.replaceAll("5", osic);
     text = minisampaConv(text);
     if (startwith.checked) {
         text = prefix + text;
