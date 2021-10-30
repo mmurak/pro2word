@@ -7,9 +7,12 @@
 </head>
 
 <body>
-<div style="text-align:right;">Powered by Carnegie Mellon University's <a href="https://github.com/cmusphinx/cmudict">CMUdict</a>.</div>
+<div style="display:inline-block;"><strong>Pronunciation to Word Dictionary</strong></div>
+<div style="display:inline-block; float:right;">Powered by Carnegie Mellon University's <a href="https://github.com/cmusphinx/cmudict">CMUdict</a>.</div>
+<br/>
 <input type="text" id="inarea" onfocus="this.select();" spellcheck="false" autocomplete="off"></input>
 <input type="button" value="Search" onclick="search();"></input>
+&nbsp;&nbsp;&nbsp;to <a href="dicsearch.html">Ordinary Pronunciation Dictionary</a>
 <br/>
 <input type="checkbox" id="startw" checked onchange="search();">Start with
 <input type="checkbox" id="endw" onchange="search();">End with
@@ -23,7 +26,7 @@
   {  æ     d  d     s  s     #   子音全般
   V  ʌ     D  ð     S  ʃ     1   「ア」っぽい音
   A  ɑ     f  f     Z  ʒ     2   「イ」っぽい音
-  E  ɝ     g  ɡ     t  t     3   「ウ」っぽい音
+  W  ɝ     g  ɡ     t  t     3   「ウ」っぽい音
   e  e     h  h     T  θ    4   「エ」っぽい音
   E  ɛ     j  j     v  v     5   「オ」っぽい音
   i  i     k  k     w  w     6   /l/, /ɹ/
@@ -66,7 +69,7 @@ for (let [key, value] of Object.entries(iDict)) {
 }
 
 const minisampa = [
-    ["{", "æ"], ["V", "ʌ"], ["A", "ɑ"], ["3", "ɝ"], ["E", "ɛ"],
+    ["{", "æ"], ["V", "ʌ"], ["A", "ɑ"], ["W", "ɝ"], ["E", "ɛ"],
     ["g", "ɡ"], ["I", "ɪ"], ["O", "ɔ"], ["U", "ʊ"], ["D", "ð"], ["N", "ŋ"],
     ["S", "ʃ"], ["Z", "ʒ"], ["T", "θ"], ["r", "ɹ"],
 ];
@@ -142,7 +145,7 @@ function search() {
             });
         }
     }
-    displayfield.value += " ... found " + outset.size + "entries.";
+    displayfield.value = "/" + displaySampa(inarea.value) + "/ ... found " + outset.size + "entries.";
     outarea.value = "";
     Array.from(outset).sort().forEach(elem => {
         outarea.value += elem + "\n";

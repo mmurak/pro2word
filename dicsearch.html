@@ -1,0 +1,76 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+    <title>Pronunciation to English Dictionary</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+    <link rel="shortcut icon" href="red-kiwi-bird.png">
+    <script src="./iDict.js"></script>
+</head>
+
+<body>
+<div style="display:inline-block;"><strong>Ordinary Pronunciation Dictionary</strong></div>
+<div style="display:inline-block; float:right;">Powered by Carnegie Mellon University's <a href="https://github.com/cmusphinx/cmudict">CMUdict</a>.</div>
+<br/>
+<input type="text" id="inarea" onfocus="this.select();" spellcheck="false" autocomplete="off"></input>
+&nbsp;&nbsp;&nbsp;to <a href="index.html">Pronunciation to Word Dictionary</a>
+<br/>
+<input type="checkbox" id="startw" checked onchange="search();">Start with
+<input type="checkbox" id="endw" onchange="search();">End with
+<br/>
+<textarea id="outarea" rows="20" cols="40" spellcheck="false" autocomplete="off" style="font-family: Times New Roman;font-size:1.1em;background-color: white;" disabled></textarea>
+
+<script>
+const inarea = document.getElementById("inarea");
+const outarea = document.getElementById("outarea");
+const startwith = document.getElementById("startw");
+const endwith = document.getElementById("endw");
+
+const prefix = "^";
+const suffix = "$";
+
+let searchDict = {};
+for (let [key, value] of Object.entries(iDict)) {
+    value.forEach(elem => {
+        if (elem in searchDict) {
+            searchDict[elem] += "," + key;
+        } else {
+            searchDict[elem] = key;
+        }
+    });
+}
+let sortedKeys = Object.keys(searchDict).sort();
+
+function search() {
+    let target = inarea.value.toLowerCase();
+    if (target == "") {
+        outarea.value = "";
+        return;
+    }
+    if (startwith.checked) target = prefix + target;
+    if (endwith.checked) target = target + suffix;
+    let re = new RegExp(target);
+    outset = new Set();
+    let candidateCount = 0;
+    for (let key of sortedKeys) {
+        if (re.test(key)) {
+            if (candidateCount++ > 300) {
+                outarea.value = "";
+                return;
+            }
+            searchDict[key].split(/,/).forEach(pron => {
+                    outset.add(key + "  /" + pron + "/");
+            });
+        }
+    }
+    outarea.value = "";
+    Array.from(outset).sort().forEach(elem => {
+        outarea.value += elem + "\n";
+    });
+}
+
+inarea.focus();
+inarea.addEventListener("input", evt => {
+    search();
+});
+</script>
+</body>
+</html>
