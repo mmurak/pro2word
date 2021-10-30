@@ -14,9 +14,9 @@
 <input type="checkbox" id="startw" checked onchange="search();">Start with
 <input type="checkbox" id="endw" onchange="search();">End with
 <br/>
-<input type="text" id="displayfield" disabled="true"></input>
+<input type="text" id="displayfield" size="50" disabled="true"></input>
 <br/>
-<textarea id="outarea" rows="20" cols="40" spellcheck="false" autocomplete="off" style="font-family: Times New Roman;font-size:1.1em;"></textarea>
+<textarea id="outarea" rows="20" cols="40" spellcheck="false" autocomplete="off" style="font-family: Times New Roman;font-size:1.1em;background-color: white;" disabled></textarea>
 <textarea id="descarea" rows="20" cols="50" style="font-family: Courier;font-size:1.0em;" disabled>
 《入力方法》
   a  a     b  b     r  ɹ     !V  母音全般
@@ -121,21 +121,30 @@ function search() {
         outarea.value = "";
         return;
     }
+    inarea.disabled = true;
     target = convert(target);
     console.log(target);
     let re = new RegExp(target);
     outset = new Set();
+    let candidateCount = 0;
     for (let [key, value] of Object.entries(searchDict)) {
         if (re.test(key)) {
+            if (candidateCount++ > 300) {
+                alert("Too many candidates...  Please change your search criteria.");
+                inarea.disabled = false;
+                return;
+            }
             iDict[searchDict[key]].forEach(e => {
                 outset.add(e + "  /" + searchDict[key] + "/");
             });
         }
     }
+    displayfield.value += " ... found " + outset.size + "entries.";
     outarea.value = "";
     Array.from(outset).sort().forEach(elem => {
         outarea.value += elem + "\n";
     });
+    inarea.disabled = false;
 }
 
 inarea.focus();
