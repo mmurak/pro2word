@@ -132,6 +132,7 @@ function search() {
             if (candidateCount++ > 300) {
                 alert("Too many candidates...  Please change your search criteria.");
                 inarea.disabled = false;
+                inarea.focus();
                 return;
             }
             iDict[searchDict[key]].forEach(e => {
