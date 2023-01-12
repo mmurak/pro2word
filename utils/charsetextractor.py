@@ -4,7 +4,7 @@ import sys
 if __name__ == "__main__":
     args = sys.argv
     if len(args) != 2:
-        print('Usage:  input dict filename', file=sys.stderr)
+        print('Usage:  input-dictionary-filename', file=sys.stderr)
         sys.exit(1)
     internalDict = set()
     with open(args[1], 'r') as f:
@@ -20,4 +20,4 @@ if __name__ == "__main__":
                 internalDict.add(ch)
     print(''.join(internalDict))
 
-#  mɝdʒfkθlzwɡʌetaæuvhipɹsɪɛobnʊɔðʃŋjɑ
+#  eðzŋoævmdɛjrʊʒɚiɪknʃwsuɔtəlafɡphbθʌɑ

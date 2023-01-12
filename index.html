@@ -2,57 +2,150 @@
 <head>
     <title>Pronunciation to English Dictionary</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
-    <link rel="shortcut icon" href="kiwi-bird.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="red-kiwi-bird.png">
     <script src="./iDict.js"></script>
+    <style>
+    .ipaCh{
+        width: 100%;
+        font-size: 150%;
+        font-family: Times New Roman;
+    }
+    .csn{
+        background-color: #afeeee;
+    }
+    .vwl{
+        background-color: #ffc0cb;
+    }
+    .dip{
+        background-color: #f4a460;
+    }
+    .non{
+        pointer-events: none;
+    }
+    .ctrl{
+        font-size: 120%;
+    }
+    .outfield{
+        font-size: 150%;
+        font-family: Times New Roman;
+    }
+    #keyboard{
+        width: 100%;
+    }
+    @media screen and (max-width: 959px) {
+    }
+    </style>
 </head>
 
 <body>
 <div style="display:inline-block;"><strong>Pronunciation to Word Dictionary</strong></div>
-<div style="display:inline-block; float:right;">Powered by Carnegie Mellon University's <a href="https://github.com/cmusphinx/cmudict">CMUdict</a>.</div>
+<div style="display:inline-block; float:right;">Powered by Carnegie Mellon University's <a href="https://github.com/cmusphinx/cmudict" target="_blank">CMU-dict</a>.</div>
 <br/>
-<input type="text" id="inarea" onfocus="this.select();" spellcheck="false" autocomplete="off"></input>
-<input type="button" value="Search" onclick="search();"></input>
-&nbsp;&nbsp;&nbsp;to <a href="dicsearch.html">Ordinary Pronunciation Dictionary</a>
+<div style="display:inline-block; float:right;">to <a href="dicsearch.html">Ordinary Pronunciation Dictionary</a></div>
 <br/>
-<input type="checkbox" id="startw" checked onchange="search();">Start with
-<input type="checkbox" id="endw" onchange="search();">End with
+<input type="checkbox" id="startw" class="ctrl" checked onchange="search();">Start with
+<input type="checkbox" id="endw" class="ctrl" onchange="search();">End with
+&nbsp;&nbsp;&nbsp;
+<input type="button" class="ctrl" value="Backspace" onclick="backspace();"></input>
+<input type="button" class="ctrl" value="All Clear" onclick="clearField();"></input>
 <br/>
-<input type="text" id="displayfield" size="50" disabled="true"></input>
-<br/>
-<textarea id="outarea" rows="20" cols="40" spellcheck="false" autocomplete="off" style="font-family: Times New Roman;font-size:1.1em;background-color: white;" disabled></textarea>
-<textarea id="descarea" rows="20" cols="50" style="font-family: Courier;font-size:1.0em;" disabled>
-《入力方法》
-  a  a     b  b     r  ɹ     @   母音全般
-  {  æ     d  d     s  s     #   子音全般
-  V  ʌ     D  ð     S  ʃ     1   「ア」っぽい音
-  A  ɑ     f  f     Z  ʒ     2   「イ」っぽい音
-  W  ɝ     g  ɡ     t  t     3   「ウ」っぽい音
-  e  e     h  h     T  θ    4   「エ」っぽい音
-  E  ɛ     j  j     v  v     5   「オ」っぽい音
-  i  i     k  k     w  w     6   /l/, /ɹ/
-  I  ɪ     l  l     z  z     7   /d/, /ð/, /z/
-  o  o     m  m              8   /t/, /θ/, /s/
-  O  ɔ     n  n              9   /b/, /v/
-  u  u     N  ŋ              0   /m/, /n/, /ŋ/
-  U  ʊ     p  p     
-</textarea>
+<input type="text" id="displayfield" class="ctrl" size="30" style="font-size: 150%; font-family: 'Times New Roman';"></input>
+<table id="keyboard" border="1">
+<tr>
+    <td><input type="button" class="ipaCh csn" value="p" onclick="pushed('p');"></td>
+    <td><input type="button" class="ipaCh csn" value="b" onclick="pushed('b');"></td>
+    <td><input type="button" class="ipaCh csn" value="t" onclick="pushed('t');"></td>
+    <td><input type="button" class="ipaCh csn" value="d" onclick="pushed('d');"></td>
+    <td><input type="button" class="ipaCh csn" value="k" onclick="pushed('k');"></td>
+    <td><input type="button" class="ipaCh csn" value="ɡ" onclick="pushed('ɡ');"></td>
+    <td><input type="button" class="ipaCh csn" value="m" onclick="pushed('m');"></td>
+    <td><input type="button" class="ipaCh csn" value="n" onclick="pushed('n');"></td>
+    <td><input type="button" class="ipaCh csn" value="ŋ" onclick="pushed('ŋ');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh csn" value="r" onclick="pushed('r');"></td>
+    <td><input type="button" class="ipaCh csn" value="l" onclick="pushed('l');"></td>
+</tr>
+<tr>
+    <td><input type="button" class="ipaCh csn" value="f" onclick="pushed('f');"></td>
+    <td><input type="button" class="ipaCh csn" value="v" onclick="pushed('v');"></td>
+    <td><input type="button" class="ipaCh csn" value="θ" onclick="pushed('θ');"></td>
+    <td><input type="button" class="ipaCh csn" value="ð" onclick="pushed('ð');"></td>
+    <td><input type="button" class="ipaCh csn" value="s" onclick="pushed('s');"></td>
+    <td><input type="button" class="ipaCh csn" value="z" onclick="pushed('z');"></td>
+    <td><input type="button" class="ipaCh csn" value="ʃ" onclick="pushed('ʃ');"></td>
+    <td><input type="button" class="ipaCh csn" value="ʒ" onclick="pushed('ʒ');"></td>
+    <td><input type="button" class="ipaCh csn" value="h" onclick="pushed('h');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh csn" value="ts" onclick="pushed('ts');"></td>
+    <td><input type="button" class="ipaCh csn" value="dz" onclick="pushed('dz');"></td>
+</tr>
+<tr>
+    <td><input type="button" class="ipaCh vwl" value="a" onclick="pushed('a');"></td>
+    <td><input type="button" class="ipaCh vwl" value="e" onclick="pushed('e');"></td>
+    <td><input type="button" class="ipaCh vwl" value="i" onclick="pushed('i');"></td>
+    <td><input type="button" class="ipaCh vwl" value="o" onclick="pushed('o');"></td>
+    <td><input type="button" class="ipaCh vwl" value="u" onclick="pushed('u');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ʌ" onclick="pushed('ʌ');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ə" onclick="pushed('ə');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh csn" value="j" onclick="pushed('j');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh csn" value="tʃ" onclick="pushed('tʃ');"></td>
+    <td><input type="button" class="ipaCh csn" value="dʒ" onclick="pushed('dʒ');"></td>
+</tr>
+<tr>
+    <td><input type="button" class="ipaCh vwl" value="æ" onclick="pushed('æ');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ɛ" onclick="pushed('ɛ');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ɪ" onclick="pushed('ɪ');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ɔ" onclick="pushed('ɔ');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ʊ" onclick="pushed('ʊ');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ɑ" onclick="pushed('ɑ');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ɚ" onclick="pushed('ɚ');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh csn" value="w" onclick="pushed('w');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
+</tr>
+<tr>
+    <td><input type="button" class="ipaCh dip" value="oʊ" onclick="pushed('oʊ');"></td>
+    <td><input type="button" class="ipaCh dip" value="aʊ" onclick="pushed('aʊ');"></td>
+    <td><input type="button" class="ipaCh dip" value="aɪ" onclick="pushed('aɪ');"></td>
+    <td><input type="button" class="ipaCh dip" value="eɪ" onclick="pushed('eɪ');"></td>
+    <td><input type="button" class="ipaCh dip" value="ɔɪ" onclick="pushed('ɔɪ');"></td>
+    <td><input type="button" class="ipaCh dip" value="ɪə" onclick="pushed('ɪə');"></td>
+    <td><input type="button" class="ipaCh dip" value="ɛə" onclick="pushed('ɛə');"></td>
+    <td><input type="button" class="ipaCh dip" value="ʊə" onclick="pushed('ʊə');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
+</tr>
+</table>
+<textarea id="outarea" class="outfield" rows="20" cols="40" spellcheck="false" autocomplete="off" disabled></textarea>
 
 <script>
-const inarea = document.getElementById("inarea");
-const outarea = document.getElementById("outarea");
-const startwith = document.getElementById("startw");
-const endwith = document.getElementById("endw");
-const displayfield = document.getElementById("displayfield");
+class GlobalManager {
+    constructor() {
+        this.outarea = document.getElementById("outarea");
+        this.startwith = document.getElementById("startw");
+        this.endwith = document.getElementById("endw");
+        this.displayfield = document.getElementById("displayfield");
+    }
+}
+
+const G = new GlobalManager();
 
 const vowels = "[aæʌɑɝeɛiɪoɔuʊ]+";
-const consonants = "[bdðfɡhjklmnŋpɹsʃʒtθvwz]+";
-const asic = "[aæʌɑɝɔ]+";
-const esic = "[æʌeɛɪɝ]+";
-const isic = "[iɪj]+";
-const osic = "[ʌɝɔoʊ]+";
-const usic = "[uʊ]+";
+const consonants = "[bdðfɡhjklmnŋprsʃʒtθvwz]+";
+const asic = "[aæʌɑɚɔə]+";
+const esic = "[æʌeɛɪɚə]+";
+const isic = "[iɪjə]+";
+const osic = "[ʌɚɔoʊə]+";
+const usic = "[uʊə]+";
 
-const lrobfuscator = "[lɹ]";
+const lrobfuscator = "[lr]";
 const tTobfuscator = "[tθs]";
 const dDobfuscator = "[dðz]";
 const bVobfuscator = "[bv]";
@@ -68,76 +161,42 @@ for (let [key, value] of Object.entries(iDict)) {
     searchDict[newkey] = key;
 }
 
-const minisampa = [
-    ["{", "æ"], ["V", "ʌ"], ["A", "ɑ"], ["W", "ɝ"], ["E", "ɛ"],
-    ["g", "ɡ"], ["I", "ɪ"], ["O", "ɔ"], ["U", "ʊ"], ["D", "ð"], ["N", "ŋ"],
-    ["S", "ʃ"], ["Z", "ʒ"], ["T", "θ"], ["r", "ɹ"],
-];
-
-function minisampaConv(text) {
-    minisampa.forEach(elem => {
-        text = text.replaceAll(elem[0], elem[1]);
-    });
-    return text;
-}
-
-function displaySampa(text) {
-    let result = "";
-    let arr = text.split("");
-    let i = 0;
-    while(i < arr.length) {
-        if (arr[i] == "!") {
-            result += "!" + arr[i+1];
-            i += 2;
-        } else {
-            result += minisampaConv(arr[i]);
-            i += 1;
-        }
-    }
-    return result;
-}
-
 function convert(text) {
-    text = text.replaceAll("@", vowels);
-    text = text.replaceAll("#", consonants);
-    text = text.replaceAll("6", lrobfuscator);
-    text = text.replaceAll("7", dDobfuscator);
-    text = text.replaceAll("8", tTobfuscator);
-    text = text.replaceAll("9", bVobfuscator);
-    text = text.replaceAll("0", nNobfuscator);
-    text = text.replaceAll("1", asic);
-    text = text.replaceAll("2", isic);
-    text = text.replaceAll("3", usic);
-    text = text.replaceAll("4", esic);
-    text = text.replaceAll("5", osic);
-    text = minisampaConv(text);
-    if (startwith.checked) {
+    text = text.replaceAll("V", vowels);
+    text = text.replaceAll("C", consonants);
+    text = text.replaceAll("L", lrobfuscator);
+    text = text.replaceAll("D", dDobfuscator);
+    text = text.replaceAll("T", tTobfuscator);
+    text = text.replaceAll("B", bVobfuscator);
+    text = text.replaceAll("M", nNobfuscator);
+    text = text.replaceAll("A", asic);
+    text = text.replaceAll("I", isic);
+    text = text.replaceAll("U", usic);
+    text = text.replaceAll("E", esic);
+    text = text.replaceAll("O", osic);
+    if (G.startwith.checked) {
         text = prefix + text;
     }
-    if (endwith.checked) {
+    if (G.endwith.checked) {
         text = text + suffix;
     }
     return text;
 }
 
 function search() {
-    let target = inarea.value;
-    if (target == "") {
-        outarea.value = "";
-        return;
-    }
-    inarea.disabled = true;
-    target = convert(target);
-    console.log(target);
+    G.outarea.value = "";
+    let target = convert(G.displayfield.value);
     let re = new RegExp(target);
     outset = new Set();
     let candidateCount = 0;
     for (let [key, value] of Object.entries(searchDict)) {
         if (re.test(key)) {
             if (candidateCount++ > 300) {
-                alert("Too many candidates...  Please change your search criteria.");
-                inarea.disabled = false;
-                inarea.focus();
+                if (G.displayfield.value != "") {
+                    G.displayfield.style = "background-color: #E0F2F7;";
+                } else {
+                    G.displayfield.style = "background-color: white;";
+                }
                 return;
             }
             iDict[searchDict[key]].forEach(e => {
@@ -145,28 +204,49 @@ function search() {
             });
         }
     }
-    displayfield.value = "/" + displaySampa(inarea.value) + "/ ... found " + outset.size + "entries.";
     outarea.value = "";
     Array.from(outset).sort().forEach(elem => {
         outarea.value += elem + "\n";
     });
-    inarea.disabled = false;
-    inarea.focus();
+    if (Array.from(outset).length == 0) {
+        G.displayfield.style = "background-color: #F8E0E0";
+    } else {
+        G.displayfield.style = "background-color: #E0F8E0;";
+    }
 }
 
-inarea.focus();
-inarea.addEventListener("keypress", evt => {
-    const key = evt.keyCode || evt.charCode || 0;
-    if (key == 13) {
-        search();
+function pushed(ipa) {
+    G.displayfield.value += ipa;
+    search();
+    G.displayfield.focus();
+}
+
+function backspace() {
+    if (Math.abs(G.displayfield.selectionStart - G.displayfield.selectionEnd) == 0) {
+        const pt = G.displayfield.selectionStart;
+        G.displayfield.value = G.displayfield.value.substring(0, G.displayfield.selectionStart - 1) + G.displayfield.value.substring(G.displayfield.selectionStart);
+        G.displayfield.selectionStart = G.displayfield.selectionEnd = pt - 1;
+    } else {
+        const st = Math.min(G.displayfield.selectionStart, G.displayfield.selectionEnd);
+        const ed = Math.max(G.displayfield.selectionStart, G.displayfield.selectionEnd);
+        G.displayfield.value = G.displayfield.value.substring(0, st) + G.displayfield.value.substring(ed);
+        G.displayfield.selectionStart = G.displayfield.selectionEnd = st;
     }
+    search();
+    G.displayfield.focus();
+}
+function clearField() {
+    G.displayfield.value = "";
+    G.displayfield.style = "background-color: white;";
+    G.outarea.value = "";
+    G.displayfield.focus();
+}
+
+G.displayfield.addEventListener("keyup", (evt) => {
+    search();
 });
-inarea.addEventListener("input", evt => {
-    displayfield.value = "/" + displaySampa(inarea.value) + "/";
-});
-inarea.addEventListener("blur", evt => {
-    inarea.focus();
-});
+
+G.displayfield.focus();
 </script>
 </body>
 </html>
