@@ -36,8 +36,27 @@
         font-size: 150%;
         font-family: Times New Roman;
     }
+    #displayfield{
+        width: 100%;
+        font-size: 150%;
+        font-family: Times New Roman;
+    }
     #keyboard{
         width: 100%;
+    }
+    @media screen and (max-width: 820px) {
+        .ipaCh{
+            width: 100%;
+            font-size: 100%;
+            font-family: Times New Roman;
+        }
+        .ctrl{
+            font-size: 100%;
+        }
+        .outfield{
+            font-size: 100%;
+            font-family: Times New Roman;
+        }
     }
     @media screen and (max-width: 550px) {
         .ipaCh{
@@ -68,7 +87,7 @@
 <input type="button" class="ctrl" value="Backspace" onclick="backspace();"></input>
 <input type="button" class="ctrl" value="All Clear" onclick="clearField();"></input>
 <br/>
-<input type="text" id="displayfield" class="ctrl" size="30" style="font-size: 150%; font-family: 'Times New Roman';"></input>
+<input type="text" id="displayfield" class="ctrl" size="30"></input>
 <table id="keyboard" border="1">
 <tr>
     <td><input type="button" class="ipaCh csn" value="p" onclick="pushed('p');"></td>
