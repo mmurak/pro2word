@@ -2,21 +2,32 @@
 <head>
     <title>English Pronunciation Dictionary</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="shortcut icon" href="red-kiwi-bird.png">
     <script src="./iDict.js"></script>
+    <style>
+    .ctrl{
+        font-size: 150%;
+        font-family: Times New Roman;
+    }
+    .outarea{
+        font-size: 150%;
+        font-family: Times New Roman;
+    }
+    </style>
 </head>
 
 <body>
 <div style="display:inline-block;"><strong>Ordinary Pronunciation Dictionary</strong></div>
 <div style="display:inline-block; float:right;">Powered by Carnegie Mellon University's <a href="https://github.com/cmusphinx/cmudict" target="_blank">CMUdict</a>.</div>
 <br/>
-<input type="text" id="inarea" onfocus="this.select();" spellcheck="false" autocomplete="off"></input>
+<input type="text" id="inarea" class="ctrl" onfocus="this.select();" spellcheck="false" autocomplete="off"></input>
 <div style="display:inline-block; float:right;">to <a href="index.html">Pronunciation to Word Dictionary</a></div>
 <br/>
-<input type="checkbox" id="startw" checked onchange="search();">Start with
-<input type="checkbox" id="endw" onchange="search();">End with
+<input type="checkbox" id="startw" class="ctrl" checked onchange="search();">Start with
+<input type="checkbox" id="endw" class="ctrl" onchange="search();">End with
 <br/>
-<textarea id="outarea" rows="20" cols="40" spellcheck="false" autocomplete="off" style="font-family: Times New Roman;font-size:1.1em;background-color: white;" disabled></textarea>
+<textarea id="outarea" class="outarea" rows="20" cols="40" spellcheck="false" autocomplete="off" disabled></textarea>
 
 <script>
 const inarea = document.getElementById("inarea");

@@ -20,4 +20,5 @@ if __name__ == "__main__":
                 internalDict.add(ch)
     print(''.join(internalDict))
 
-#  eðzŋoævmdɛjrʊʒɚiɪknʃwsuɔtəlafɡphbθʌɑ
+#  pktmvrwθfʃʒdzŋsjðlnɡbh
+#  əʌiɔouʊɚɪɛɑæae

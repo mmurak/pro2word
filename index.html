@@ -17,8 +17,14 @@
     .vwl{
         background-color: #ffc0cb;
     }
-    .dip{
+    .usr{
+        background-color: #dcdcdc;
+    }
+    .cv{
         background-color: #f4a460;
+    }
+    .reg{
+        background-color: #ff8080;
     }
     .non{
         pointer-events: none;
@@ -40,7 +46,7 @@
 
 <body>
 <div style="display:inline-block;"><strong>Pronunciation to Word Dictionary</strong></div>
-<div style="display:inline-block; float:right;">Powered by Carnegie Mellon University's <a href="https://github.com/cmusphinx/cmudict" target="_blank">CMU-dict</a>.</div>
+<div style="display:inline-block; float:right;">Powered by Carnegie Mellon University's <a href="https://github.com/cmusphinx/cmudict" target="_blank">CMUdict</a>.</div>
 <br/>
 <div style="display:inline-block; float:right;">to <a href="dicsearch.html">Ordinary Pronunciation Dictionary</a></div>
 <br/>
@@ -63,8 +69,8 @@
     <td><input type="button" class="ipaCh csn" value="n" onclick="pushed('n');"></td>
     <td><input type="button" class="ipaCh csn" value="ŋ" onclick="pushed('ŋ');"></td>
     <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh csn" value="r" onclick="pushed('r');"></td>
     <td><input type="button" class="ipaCh csn" value="l" onclick="pushed('l');"></td>
+    <td><input type="button" class="ipaCh csn" value="r" onclick="pushed('r');"></td>
 </tr>
 <tr>
     <td><input type="button" class="ipaCh csn" value="f" onclick="pushed('f');"></td>
@@ -109,18 +115,18 @@
     <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
 </tr>
 <tr>
-    <td><input type="button" class="ipaCh dip" value="oʊ" onclick="pushed('oʊ');"></td>
-    <td><input type="button" class="ipaCh dip" value="aʊ" onclick="pushed('aʊ');"></td>
-    <td><input type="button" class="ipaCh dip" value="aɪ" onclick="pushed('aɪ');"></td>
-    <td><input type="button" class="ipaCh dip" value="eɪ" onclick="pushed('eɪ');"></td>
-    <td><input type="button" class="ipaCh dip" value="ɔɪ" onclick="pushed('ɔɪ');"></td>
-    <td><input type="button" class="ipaCh dip" value="ɪə" onclick="pushed('ɪə');"></td>
-    <td><input type="button" class="ipaCh dip" value="ɛə" onclick="pushed('ɛə');"></td>
-    <td><input type="button" class="ipaCh dip" value="ʊə" onclick="pushed('ʊə');"></td>
+    <td><input type="button" class="ipaCh cv" value="C" onclick="pushed('C');"></td>
+    <td><input type="button" class="ipaCh cv" value="V" onclick="pushed('V');"></td>
+    <td><input type="button" class="ipaCh usr" value="-1-" onclick="regCh(1);"></td>
+    <td><input type="button" class="ipaCh usr" value="-2-" onclick="regCh(2);"></td>
+    <td><input type="button" class="ipaCh usr" value="-3-" onclick="regCh(3);"></td>
+    <td><input type="button" class="ipaCh usr" value="-4-" onclick="regCh(4);"></td>
+    <td><input type="button" class="ipaCh usr" value="-5-" onclick="regCh(5);"></td>
+    <td><input type="button" class="ipaCh usr" value="-6-" onclick="regCh(6);"></td>
+    <td><input type="button" class="ipaCh usr" value="-7-" onclick="regCh(7);"></td>
     <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
     <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh reg" value="+" onclick="register('');"></td>
 </tr>
 </table>
 <textarea id="outarea" class="outfield" rows="20" cols="40" spellcheck="false" autocomplete="off" disabled></textarea>
@@ -137,13 +143,13 @@ class GlobalManager {
 
 const G = new GlobalManager();
 
-const vowels = "[aæʌɑɝeɛiɪoɔuʊ]+";
-const consonants = "[bdðfɡhjklmnŋprsʃʒtθvwz]+";
+const vowels = "[əʌiɔouʊɚɪɛɑæae]+";
+const consonants = "[pktmvrwθfʃʒdzŋsjðlnɡbh]";
 const asic = "[aæʌɑɚɔə]+";
 const esic = "[æʌeɛɪɚə]+";
 const isic = "[iɪjə]+";
 const osic = "[ʌɚɔoʊə]+";
-const usic = "[uʊə]+";
+const usic = "[uʊəw]+";
 
 const lrobfuscator = "[lr]";
 const tTobfuscator = "[tθs]";
@@ -216,9 +222,30 @@ function search() {
 }
 
 function pushed(ipa) {
-    G.displayfield.value += ipa;
+    const st = G.displayfield.selectionStart;
+    const ed = G.displayfield.selectionEnd;
+    if (st != ed) {
+        _eraseRegion();
+    }
+    G.displayfield.value = G.displayfield.value.substring(0, st) + ipa + G.displayfield.value.substring(st);
+    G.displayfield.selectionStart = G.displayfield.selectionEnd = st + 1;
     search();
     G.displayfield.focus();
+}
+
+function register() {
+    alert("Not yet implemented.");
+}
+
+function regCh(val) {
+    alert("Not yet implemented.");
+}
+
+function _eraseRegion() {
+    const st = Math.min(G.displayfield.selectionStart, G.displayfield.selectionEnd);
+    const ed = Math.max(G.displayfield.selectionStart, G.displayfield.selectionEnd);
+    G.displayfield.value = G.displayfield.value.substring(0, st) + G.displayfield.value.substring(ed);
+    G.displayfield.selectionStart = G.displayfield.selectionEnd = st;
 }
 
 function backspace() {
@@ -227,10 +254,7 @@ function backspace() {
         G.displayfield.value = G.displayfield.value.substring(0, G.displayfield.selectionStart - 1) + G.displayfield.value.substring(G.displayfield.selectionStart);
         G.displayfield.selectionStart = G.displayfield.selectionEnd = pt - 1;
     } else {
-        const st = Math.min(G.displayfield.selectionStart, G.displayfield.selectionEnd);
-        const ed = Math.max(G.displayfield.selectionStart, G.displayfield.selectionEnd);
-        G.displayfield.value = G.displayfield.value.substring(0, st) + G.displayfield.value.substring(ed);
-        G.displayfield.selectionStart = G.displayfield.selectionEnd = st;
+        _eraseRegion();
     }
     search();
     G.displayfield.focus();
@@ -245,6 +269,7 @@ function clearField() {
 G.displayfield.addEventListener("keyup", (evt) => {
     search();
 });
+
 
 G.displayfield.focus();
 </script>
