@@ -228,7 +228,7 @@ function pushed(ipa) {
         _eraseRegion();
     }
     G.displayfield.value = G.displayfield.value.substring(0, st) + ipa + G.displayfield.value.substring(st);
-    G.displayfield.selectionStart = G.displayfield.selectionEnd = st + 1;
+    G.displayfield.selectionStart = G.displayfield.selectionEnd = st + ipa.length;
     search();
     G.displayfield.focus();
 }
