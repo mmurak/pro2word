@@ -23,9 +23,6 @@
     .cv{
         background-color: #f4a460;
     }
-    .reg{
-        background-color: #ff8080;
-    }
     .non{
         pointer-events: none;
     }
@@ -35,6 +32,41 @@
     .outfield{
         font-size: 150%;
         font-family: Times New Roman;
+    }
+    label {
+        cursor: pointer;
+        display: block;
+        float: center;
+        text-align: center;
+        padding: 5px;
+        user-select: none;
+    }
+    input[type="checkbox"] {
+        display: none;
+    }
+    input.checkboxer[type="checkbox"]:checked + .label {
+        background-color: red;
+        color: white;
+    }
+    input[type="checkbox"]:checked + .label {
+        background-color: #8080c0;
+        color: white;
+    }
+    .dlgb {
+        border: 1px solid gray;
+        padding: 20px;
+        background-color: white;
+        color: black;
+        display: inline-block;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: auto; 
+        height: auto;
+        z-index: 5;
+    }
+    .cfctrl {
+        width: 100%;
     }
     #displayfield{
         width: 100%;
@@ -81,86 +113,160 @@
 <br/>
 <div style="display:inline-block; float:right;">to <a href="dicsearch.html">Ordinary Pronunciation Dictionary</a></div>
 <br/>
-<input type="checkbox" id="startw" class="ctrl" checked onchange="search();">Start with
-<input type="checkbox" id="endw" class="ctrl" onchange="search();">End with
+<div style="display: flex; align-items: flex-start;align-items: stretch;">
+<table>
+<tr>
+<td style="border: 1px #808080 solid;"><input type="checkbox" id="startw" class="ctrl" checked onchange="search();"><label class="label" for="startw">Start with</label></span></td>
+<td style="border: 1px #808080 solid;"><input type="checkbox" id="endw" class="ctrl" onchange="search();"><label class="label" for="endw">End with</label></td>
+</tr>
+</table>
 &nbsp;&nbsp;&nbsp;
 <input type="button" class="ctrl" value="Backspace" onclick="backspace();"></input>
+&nbsp;
 <input type="button" class="ctrl" value="All Clear" onclick="clearField();"></input>
-<br/>
-<input type="text" id="displayfield" class="ctrl" size="30"></input>
+</div>
+<input type="text" id="displayfield" class="ctrl" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></input>
 <table id="keyboard" border="1">
 <tr>
-    <td><input type="button" class="ipaCh csn" value="p" onclick="pushed('p');"></td>
-    <td><input type="button" class="ipaCh csn" value="b" onclick="pushed('b');"></td>
-    <td><input type="button" class="ipaCh csn" value="t" onclick="pushed('t');"></td>
-    <td><input type="button" class="ipaCh csn" value="d" onclick="pushed('d');"></td>
-    <td><input type="button" class="ipaCh csn" value="k" onclick="pushed('k');"></td>
-    <td><input type="button" class="ipaCh csn" value="ɡ" onclick="pushed('ɡ');"></td>
-    <td><input type="button" class="ipaCh csn" value="m" onclick="pushed('m');"></td>
-    <td><input type="button" class="ipaCh csn" value="n" onclick="pushed('n');"></td>
-    <td><input type="button" class="ipaCh csn" value="ŋ" onclick="pushed('ŋ');"></td>
-    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh csn" value="l" onclick="pushed('l');"></td>
-    <td><input type="button" class="ipaCh csn" value="r" onclick="pushed('r');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="p" onclick="pushed('p');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="b" onclick="pushed('b');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="t" onclick="pushed('t');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="d" onclick="pushed('d');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="k" onclick="pushed('k');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="ɡ" onclick="pushed('ɡ');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="m" onclick="pushed('m');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="n" onclick="pushed('n');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="ŋ" onclick="pushed('ŋ');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="l" onclick="pushed('l');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="r" onclick="pushed('r');"></td>
 </tr>
 <tr>
-    <td><input type="button" class="ipaCh csn" value="f" onclick="pushed('f');"></td>
-    <td><input type="button" class="ipaCh csn" value="v" onclick="pushed('v');"></td>
-    <td><input type="button" class="ipaCh csn" value="θ" onclick="pushed('θ');"></td>
-    <td><input type="button" class="ipaCh csn" value="ð" onclick="pushed('ð');"></td>
-    <td><input type="button" class="ipaCh csn" value="s" onclick="pushed('s');"></td>
-    <td><input type="button" class="ipaCh csn" value="z" onclick="pushed('z');"></td>
-    <td><input type="button" class="ipaCh csn" value="ʃ" onclick="pushed('ʃ');"></td>
-    <td><input type="button" class="ipaCh csn" value="ʒ" onclick="pushed('ʒ');"></td>
-    <td><input type="button" class="ipaCh csn" value="h" onclick="pushed('h');"></td>
-    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh csn" value="ts" onclick="pushed('ts');"></td>
-    <td><input type="button" class="ipaCh csn" value="dz" onclick="pushed('dz');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="f" onclick="pushed('f');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="v" onclick="pushed('v');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="θ" onclick="pushed('θ');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="ð" onclick="pushed('ð');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="s" onclick="pushed('s');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="z" onclick="pushed('z');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="ʃ" onclick="pushed('ʃ');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="ʒ" onclick="pushed('ʒ');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="h" onclick="pushed('h');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="ts" onclick="pushed('ts');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="dz" onclick="pushed('dz');"></td>
 </tr>
 <tr>
-    <td><input type="button" class="ipaCh vwl" value="a" onclick="pushed('a');"></td>
-    <td><input type="button" class="ipaCh vwl" value="e" onclick="pushed('e');"></td>
-    <td><input type="button" class="ipaCh vwl" value="i" onclick="pushed('i');"></td>
-    <td><input type="button" class="ipaCh vwl" value="o" onclick="pushed('o');"></td>
-    <td><input type="button" class="ipaCh vwl" value="u" onclick="pushed('u');"></td>
-    <td><input type="button" class="ipaCh vwl" value="ʌ" onclick="pushed('ʌ');"></td>
-    <td><input type="button" class="ipaCh vwl" value="ə" onclick="pushed('ə');"></td>
-    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh csn" value="j" onclick="pushed('j');"></td>
-    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh csn" value="tʃ" onclick="pushed('tʃ');"></td>
-    <td><input type="button" class="ipaCh csn" value="dʒ" onclick="pushed('dʒ');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="a" onclick="pushed('a');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="e" onclick="pushed('e');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="i" onclick="pushed('i');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="o" onclick="pushed('o');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="u" onclick="pushed('u');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="ʌ" onclick="pushed('ʌ');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="ə" onclick="pushed('ə');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="j" onclick="pushed('j');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="tʃ" onclick="pushed('tʃ');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="dʒ" onclick="pushed('dʒ');"></td>
 </tr>
 <tr>
-    <td><input type="button" class="ipaCh vwl" value="æ" onclick="pushed('æ');"></td>
-    <td><input type="button" class="ipaCh vwl" value="ɛ" onclick="pushed('ɛ');"></td>
-    <td><input type="button" class="ipaCh vwl" value="ɪ" onclick="pushed('ɪ');"></td>
-    <td><input type="button" class="ipaCh vwl" value="ɔ" onclick="pushed('ɔ');"></td>
-    <td><input type="button" class="ipaCh vwl" value="ʊ" onclick="pushed('ʊ');"></td>
-    <td><input type="button" class="ipaCh vwl" value="ɑ" onclick="pushed('ɑ');"></td>
-    <td><input type="button" class="ipaCh vwl" value="ɚ" onclick="pushed('ɚ');"></td>
-    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh csn" value="w" onclick="pushed('w');"></td>
-    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="æ" onclick="pushed('æ');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="ɛ" onclick="pushed('ɛ');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="ɪ" onclick="pushed('ɪ');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="ɔ" onclick="pushed('ɔ');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="ʊ" onclick="pushed('ʊ');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="ɑ" onclick="pushed('ɑ');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="ɚ" onclick="pushed('ɚ');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="w" onclick="pushed('w');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
 </tr>
 <tr>
-    <td><input type="button" class="ipaCh cv" value="C" onclick="pushed('C');"></td>
-    <td><input type="button" class="ipaCh cv" value="V" onclick="pushed('V');"></td>
-    <td><input type="button" class="ipaCh usr" value="-1-" onclick="regCh(1);"></td>
-    <td><input type="button" class="ipaCh usr" value="-2-" onclick="regCh(2);"></td>
-    <td><input type="button" class="ipaCh usr" value="-3-" onclick="regCh(3);"></td>
-    <td><input type="button" class="ipaCh usr" value="-4-" onclick="regCh(4);"></td>
-    <td><input type="button" class="ipaCh usr" value="-5-" onclick="regCh(5);"></td>
-    <td><input type="button" class="ipaCh usr" value="-6-" onclick="regCh(6);"></td>
-    <td><input type="button" class="ipaCh usr" value="-7-" onclick="regCh(7);"></td>
-    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh non" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh reg" value="+" onclick="register('');"></td>
+    <td><input type="button" class="ipaCh cv fl" value="C" onclick="pushed('C');"></td>
+    <td><input type="button" class="ipaCh cv fl" value="V" onclick="pushed('V');"></td>
+    <td><input type="button" class="ipaCh usr fl" value="-1-" onclick="funcCh(1);"></td>
+    <td><input type="button" class="ipaCh usr fl" value="-2-" onclick="funcCh(2);"></td>
+    <td><input type="button" class="ipaCh usr fl" value="-3-" onclick="funcCh(3);"></td>
+    <td><input type="button" class="ipaCh usr fl" value="-4-" onclick="funcCh(4);"></td>
+    <td><input type="button" class="ipaCh usr fl" value="-5-" onclick="funcCh(5);"></td>
+    <td><input type="button" class="ipaCh usr fl" value="-6-" onclick="funcCh(6);"></td>
+    <td><input type="button" class="ipaCh usr fl" value="-7-" onclick="funcCh(7);"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="checkbox" class="ipaCh checkboxer fl" id="recBtn" value="+"><label class="label" for="recBtn">Reg</label></td>
 </tr>
 </table>
 <textarea id="outarea" class="outfield" rows="20" cols="40" spellcheck="false" autocomplete="off" disabled></textarea>
+
+
+<div id="entryDialog" class="dlgb" style="visibility: hidden;">
+
+<input type="button" id="configBS" value="Backspace" onclick="cfbackspace();">
+<input type="text" id="configfield" class="cfctrl" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></input>
+
+<table id="configKeyboard" border="1">
+<tr>
+    <td><input type="button" class="ipaCh csn" value="p" onclick="picked('p');"></td>
+    <td><input type="button" class="ipaCh csn" value="b" onclick="picked('b');"></td>
+    <td><input type="button" class="ipaCh csn" value="t" onclick="picked('t');"></td>
+    <td><input type="button" class="ipaCh csn" value="d" onclick="picked('d');"></td>
+    <td><input type="button" class="ipaCh csn" value="k" onclick="picked('k');"></td>
+    <td><input type="button" class="ipaCh csn" value="ɡ" onclick="picked('ɡ');"></td>
+    <td><input type="button" class="ipaCh csn" value="m" onclick="picked('m');"></td>
+    <td><input type="button" class="ipaCh csn" value="n" onclick="picked('n');"></td>
+    <td><input type="button" class="ipaCh csn" value="ŋ" onclick="picked('ŋ');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="picked('');"></td>
+    <td><input type="button" class="ipaCh csn" value="l" onclick="picked('l');"></td>
+    <td><input type="button" class="ipaCh csn" value="r" onclick="picked('r');"></td>
+</tr>
+<tr>
+    <td><input type="button" class="ipaCh csn" value="f" onclick="picked('f');"></td>
+    <td><input type="button" class="ipaCh csn" value="v" onclick="picked('v');"></td>
+    <td><input type="button" class="ipaCh csn" value="θ" onclick="picked('θ');"></td>
+    <td><input type="button" class="ipaCh csn" value="ð" onclick="picked('ð');"></td>
+    <td><input type="button" class="ipaCh csn" value="s" onclick="picked('s');"></td>
+    <td><input type="button" class="ipaCh csn" value="z" onclick="picked('z');"></td>
+    <td><input type="button" class="ipaCh csn" value="ʃ" onclick="picked('ʃ');"></td>
+    <td><input type="button" class="ipaCh csn" value="ʒ" onclick="picked('ʒ');"></td>
+    <td><input type="button" class="ipaCh csn" value="h" onclick="picked('h');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="picked('');"></td>
+    <td><input type="button" class="ipaCh csn" value="ts" onclick="picked('ts');"></td>
+    <td><input type="button" class="ipaCh csn" value="dz" onclick="picked('dz');"></td>
+</tr>
+<tr>
+    <td><input type="button" class="ipaCh vwl" value="a" onclick="picked('a');"></td>
+    <td><input type="button" class="ipaCh vwl" value="e" onclick="picked('e');"></td>
+    <td><input type="button" class="ipaCh vwl" value="i" onclick="picked('i');"></td>
+    <td><input type="button" class="ipaCh vwl" value="o" onclick="picked('o');"></td>
+    <td><input type="button" class="ipaCh vwl" value="u" onclick="picked('u');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ʌ" onclick="picked('ʌ');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ə" onclick="picked('ə');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="picked('');"></td>
+    <td><input type="button" class="ipaCh csn" value="j" onclick="picked('j');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="picked('');"></td>
+    <td><input type="button" class="ipaCh csn" value="tʃ" onclick="picked('tʃ');"></td>
+    <td><input type="button" class="ipaCh csn" value="dʒ" onclick="picked('dʒ');"></td>
+</tr>
+<tr>
+    <td><input type="button" class="ipaCh vwl" value="æ" onclick="picked('æ');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ɛ" onclick="picked('ɛ');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ɪ" onclick="picked('ɪ');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ɔ" onclick="picked('ɔ');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ʊ" onclick="picked('ʊ');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ɑ" onclick="picked('ɑ');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ɚ" onclick="picked('ɚ');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="picked('');"></td>
+    <td><input type="button" class="ipaCh csn" value="w" onclick="picked('w');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="picked('');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="picked('');"></td>
+    <td><input type="button" class="ipaCh non" value="" onclick="picked('');"></td>
+</tr>
+</table>
+<input type="button" class="btn" value="Cancel" onclick="closeTAdialog();">
+<input type="button" class="btn" value="OK" onclick="processTAdialog();">
+</div>
 
 <script>
 class GlobalManager {
@@ -169,6 +275,19 @@ class GlobalManager {
         this.startwith = document.getElementById("startw");
         this.endwith = document.getElementById("endw");
         this.displayfield = document.getElementById("displayfield");
+        this.recBtn = document.getElementById("recBtn");
+        this.dialog = document.getElementById("entryDialog");
+        this.configfield = document.getElementById("configfield");
+        this.presetArray = [
+            "lr",
+            "stθ",
+            "zdð",
+            "",
+            "",
+            "",
+            "",
+        ];
+        this.presetPointer;
     }
 }
 
@@ -264,12 +383,16 @@ function pushed(ipa) {
     G.displayfield.focus();
 }
 
-function register() {
-    alert("Not yet implemented.");
-}
-
-function regCh(val) {
-    alert("Not yet implemented.");
+function funcCh(val) {
+    G.presetPointer = val - 1;
+    if (G.recBtn.checked) {
+        openTAdialog();
+        G.recBtn.checked = false;
+    } else {
+        const str = G.presetArray[G.presetPointer];
+        if (str == "") return;
+        pushed("[" + str + "]");
+    }
 }
 
 function _eraseRegion() {
@@ -302,7 +425,62 @@ G.displayfield.addEventListener("keyup", (evt) => {
 });
 
 
+function openTAdialog() {
+    flController(true);
+    G.configfield.value = G.presetArray[G.presetPointer];
+    G.dialog.style.visibility = "visible";
+    G.configfield.focus();
+}
+
+function processTAdialog() {
+    G.presetArray[G.presetPointer] = G.configfield.value;
+    closeTAdialog();
+}
+
+function closeTAdialog() {
+    G.dialog.style.visibility = "hidden";
+    flController(false);
+}
+
+
+function picked(ipa) {
+    const st = G.configfield.selectionStart;
+    const ed = G.configfield.selectionEnd;
+    if (st != ed) {
+        _eraseConfigRegion();
+    }
+    G.configfield.value = G.configfield.value.substring(0, st) + ipa + G.configfield.value.substring(st);
+    G.configfield.selectionStart = G.configfield.selectionEnd = st + ipa.length;
+    G.configfield.focus();
+}
+
+function _eraseConfigRegion() {
+    const st = Math.min(G.configfield.selectionStart, G.configfield.selectionEnd);
+    const ed = Math.max(G.configfield.selectionStart, G.configfield.selectionEnd);
+    G.configfield.value = G.configfield.value.substring(0, st) + G.configfield.value.substring(ed);
+    G.configfield.selectionStart = G.configfield.selectionEnd = st;
+}
+
+function cfbackspace() {
+    if (Math.abs(G.configfield.selectionStart - G.configfield.selectionEnd) == 0) {
+        const pt = G.configfield.selectionStart;
+        G.configfield.value = G.configfield.value.substring(0, G.configfield.selectionStart - 1) + G.configfield.value.substring(G.configfield.selectionStart);
+        G.configfield.selectionStart = G.configfield.selectionEnd = pt - 1;
+    } else {
+        _eraseConfigRegion();
+    }
+    G.configfield.focus();
+}
+
+function flController(flag) {
+    const elemArray = document.getElementsByClassName("fl");
+    for (elem of elemArray) {
+        elem.disabled = flag;
+    }
+}
+
 G.displayfield.focus();
+
 </script>
 </body>
 </html>
