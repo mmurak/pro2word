@@ -23,6 +23,7 @@ if __name__ == "__main__":
             entry = entry.replace('_', ' ').lower()
             pron = line[sep + 1:]   # 1 is the length of the separator
             pron = pron.strip()
+            pron = pron.replace('g', 'ɡ')
             pron = pron.replace(' ', '')
             pron = re.sub(prim, r'\1U0301', pron)
             pron = pron.replace('U0301', '\u0301')
