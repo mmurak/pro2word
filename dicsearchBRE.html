@@ -25,7 +25,8 @@
 <div style="display:inline-block;"><strong>Word to Pronunciation Search (Br.E)</strong></div>
 <div style="display:inline-block; float:right;">Powered by <a href="https://github.com/JoseLlarena/Britfone" target="_blank">Britfone</a>.</div>
 <br/>
-<input type="text" id="inarea" class="ctrl" onfocus="this.select();" spellcheck="false" autocomplete="off"></input>
+<input type="text" id="inarea" class="ctrl" onfocus="this.select();" spellcheck="false" autocomplete="off">
+<input type="button" class="ctrl" value="Clear" onclick="clearAreas();">
 <div style="display:inline-block; float:right;">to <a href="indexBRE.html">P -> W</a></div>
 <br/>
 <input type="checkbox" id="startw" class="ctrl" checked onchange="search();">Start with
@@ -82,9 +83,20 @@ function search() {
     });
 }
 
+function clearAreas() {
+    inarea.value = "";
+    outarea.value = "";
+    inarea.focus();
+}
+
 inarea.focus();
 inarea.addEventListener("input", evt => {
     search();
+});
+inarea.addEventListener("keydown", evt => {
+    if (evt.key == "Escape") {
+        clearAreas();
+    }
 });
 </script>
 </body>
