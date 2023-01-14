@@ -1,10 +1,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 <head>
-    <title>Pronunciation to Word Search (Am.E)</title>
+    <title>Pronunciation to Word Search (Br.E)</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="shortcut icon" href="red-kiwi-bird.png">
-    <script src="./iDict.js"></script>
+    <link rel="shortcut icon" href="deepgreen-kiwi-bird.png">
+    <script src="./iDictBRE.js"></script>
     <style>
     .ipaCh{
         width: 100%;
@@ -50,7 +50,7 @@
         color: white;
     }
     input.checkboxer[type="checkbox"] + .label {
-        background-color: fcf3cf;
+        background-color: #fcf3cf;
         color: black;
     }
     input[type="checkbox"]:checked + .label {
@@ -86,7 +86,7 @@
         width: 100%;
     }
     #background {
-        background-color: #F9EBEA;
+        background-color: #EBF5FB;
     }
     @media screen and (max-width: 820px) {
         .ipaCh{
@@ -120,10 +120,10 @@
 </head>
 
 <body id="background">
-<div style="display:inline-block;"><strong>Pronunciation to Word Search (Am.E)</strong></div>
-<div style="display:inline-block; float:right;">Powered by Carnegie Mellon University's <a href="https://github.com/cmusphinx/cmudict" target="_blank">CMUdict</a>.</div>
+<div style="display:inline-block;"><strong>Pronunciation to Word Search (Br.E)</strong></div>
+<div style="display:inline-block; float:right;">Powered by <a href="https://github.com/JoseLlarena/Britfone" target="_blank">Britfone</a>.</div>
 <br/>
-<div style="display:inline-block; float:right;">to <a href="dicsearch.html">W -> P</a></div>
+<div style="display:inline-block; float:right;">to <a href="dicsearchBRE.html">W -> P</a></div>
 <br/>
 <div style="display: flex; align-items: flex-start;align-items: stretch;">
 <table>
@@ -151,7 +151,7 @@
     <td><input type="button" class="ipaCh csn fl" value="ŋ" onclick="pushed('ŋ');"></td>
     <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
     <td><input type="button" class="ipaCh csn fl" value="l" onclick="pushed('l');"></td>
-    <td><input type="button" class="ipaCh csn fl" value="r" onclick="pushed('r');"></td>
+    <td><input type="button" class="ipaCh csn fl" value="ɹ" onclick="pushed('ɹ');"></td>
 </tr>
 <tr>
     <td><input type="button" class="ipaCh csn fl" value="f" onclick="pushed('f');"></td>
@@ -171,9 +171,9 @@
     <td><input type="button" class="ipaCh vwl fl" value="a" onclick="pushed('a');"></td>
     <td><input type="button" class="ipaCh vwl fl" value="e" onclick="pushed('e');"></td>
     <td><input type="button" class="ipaCh vwl fl" value="i" onclick="pushed('i');"></td>
-    <td><input type="button" class="ipaCh vwl fl" value="o" onclick="pushed('o');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="ɔ" onclick="pushed('ɔ');"></td>
     <td><input type="button" class="ipaCh vwl fl" value="u" onclick="pushed('u');"></td>
-    <td><input type="button" class="ipaCh vwl fl" value="ʌ" onclick="pushed('ʌ');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="ɐ" onclick="pushed('ɐ');"></td>
     <td><input type="button" class="ipaCh vwl fl" value="ə" onclick="pushed('ə');"></td>
     <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
     <td><input type="button" class="ipaCh csn fl" value="j" onclick="pushed('j');"></td>
@@ -185,11 +185,11 @@
     <td><input type="button" class="ipaCh vwl fl" value="æ" onclick="pushed('æ');"></td>
     <td><input type="button" class="ipaCh vwl fl" value="ɛ" onclick="pushed('ɛ');"></td>
     <td><input type="button" class="ipaCh vwl fl" value="ɪ" onclick="pushed('ɪ');"></td>
-    <td><input type="button" class="ipaCh vwl fl" value="ɔ" onclick="pushed('ɔ');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="ɒ" onclick="pushed('ɒ');"></td>
     <td><input type="button" class="ipaCh vwl fl" value="ʊ" onclick="pushed('ʊ');"></td>
     <td><input type="button" class="ipaCh vwl fl" value="ɑ" onclick="pushed('ɑ');"></td>
-    <td><input type="button" class="ipaCh vwl fl" value="ɚ" onclick="pushed('ɚ');"></td>
-    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="ɜː" onclick="pushed('ɜː');"></td>
+    <td><input type="button" class="ipaCh vwl fl" value="ː" onclick="pushed('ː');"></td>
     <td><input type="button" class="ipaCh csn fl" value="w" onclick="pushed('w');"></td>
     <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
     <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
@@ -231,7 +231,7 @@
     <td><input type="button" class="ipaCh csn" value="ŋ" onclick="picked('ŋ');"></td>
     <td><input type="button" class="ipaCh non" value="" onclick="picked('');"></td>
     <td><input type="button" class="ipaCh csn" value="l" onclick="picked('l');"></td>
-    <td><input type="button" class="ipaCh csn" value="r" onclick="picked('r');"></td>
+    <td><input type="button" class="ipaCh csn" value="ɹ" onclick="picked('ɹ');"></td>
 </tr>
 <tr>
     <td><input type="button" class="ipaCh csn" value="f" onclick="picked('f');"></td>
@@ -251,9 +251,9 @@
     <td><input type="button" class="ipaCh vwl" value="a" onclick="picked('a');"></td>
     <td><input type="button" class="ipaCh vwl" value="e" onclick="picked('e');"></td>
     <td><input type="button" class="ipaCh vwl" value="i" onclick="picked('i');"></td>
-    <td><input type="button" class="ipaCh vwl" value="o" onclick="picked('o');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ɔ" onclick="picked('ɔ');"></td>
     <td><input type="button" class="ipaCh vwl" value="u" onclick="picked('u');"></td>
-    <td><input type="button" class="ipaCh vwl" value="ʌ" onclick="picked('ʌ');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ɐ" onclick="picked('ɐ');"></td>
     <td><input type="button" class="ipaCh vwl" value="ə" onclick="picked('ə');"></td>
     <td><input type="button" class="ipaCh non" value="" onclick="picked('');"></td>
     <td><input type="button" class="ipaCh csn" value="j" onclick="picked('j');"></td>
@@ -265,11 +265,11 @@
     <td><input type="button" class="ipaCh vwl" value="æ" onclick="picked('æ');"></td>
     <td><input type="button" class="ipaCh vwl" value="ɛ" onclick="picked('ɛ');"></td>
     <td><input type="button" class="ipaCh vwl" value="ɪ" onclick="picked('ɪ');"></td>
-    <td><input type="button" class="ipaCh vwl" value="ɔ" onclick="picked('ɔ');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ɒ" onclick="picked('ɒ');"></td>
     <td><input type="button" class="ipaCh vwl" value="ʊ" onclick="picked('ʊ');"></td>
     <td><input type="button" class="ipaCh vwl" value="ɑ" onclick="picked('ɑ');"></td>
-    <td><input type="button" class="ipaCh vwl" value="ɚ" onclick="picked('ɚ');"></td>
-    <td><input type="button" class="ipaCh non" value="" onclick="picked('');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ɜː" onclick="picked('ɜː');"></td>
+    <td><input type="button" class="ipaCh vwl" value="ː" onclick="picked('ː');"></td>
     <td><input type="button" class="ipaCh csn" value="w" onclick="picked('w');"></td>
     <td><input type="button" class="ipaCh non" value="" onclick="picked('');"></td>
     <td><input type="button" class="ipaCh non" value="" onclick="picked('');"></td>
@@ -291,7 +291,7 @@ class GlobalManager {
         this.dialog = document.getElementById("entryDialog");
         this.configfield = document.getElementById("configfield");
         this.presetArray = [
-            "lr",
+            "lɹ",
             "stθ",
             "zdð",
             "",
@@ -305,12 +305,12 @@ class GlobalManager {
 
 const G = new GlobalManager();
 
-const vowels = "[əʌiɔouʊɚɪɛɑæae]+";
+const vowels = "[ɛɒɪɐəæɜːeauɔɑiʊ]+";
 const consonants = "[pktmvrwθfʃʒdzŋsjðlnɡbh]";
-const asic = "[aæʌɑɚɔə]+";
-const esic = "[æʌeɛɪɚə]+";
+const asic = "[aæɐɑɔəɜː]+";
+const esic = "[æɐeɛɪɚɜː]+";
 const isic = "[iɪjə]+";
-const osic = "[ʌɚɔoʊə]+";
+const osic = "[ɐɜːɔoʊə]+";
 const usic = "[uʊəw]+";
 
 const lrobfuscator = "[lr]";
