@@ -211,6 +211,7 @@ class GlobalManager {
         this.counterarea = document.getElementById("counterarea");
         this.counter = 0;
         this.errorcounterarea = document.getElementById("errorcounterarea");
+        this.errorcounter = 0;
         this.grid = document.getElementById("grid");
         this.answerInIPA = "";
         this.answerInCh = [];
@@ -251,7 +252,7 @@ function buildTable(str) {
         G.gridPointer.push([ch, newCell]);
     }
     G.counterarea.innerHTML = G.counter = 0;
-    G.errorcounterarea.innerHTML  = 0;
+    G.errorcounterarea.innerHTML  = G.errorcounter =0;
 }
 
 function incrementCounter() {
@@ -263,23 +264,28 @@ function checkUp(ch) {
     const id = document.getElementById("k" + ch);
     id.disabled = true;
     let ctr = 0;
+    let bam = false;
     for (c of G.gridPointer) {
         if (c[0] == ch) {
             c[1].style.color = "black";
+            bam = true;
         } else {
         }
         if (c[1].style.color == "black") {
             ctr++;
         }
     }
-    return ctr;
+    return [ctr, bam];
 }
 
 function pushed(ch) {
     incrementCounter();
     let ctr = checkUp(ch);
-    G.errorcounterarea.innerHTML = G.counter - ctr;
-    if (G.gridPointer.length <= ctr) {
+    if (ctr[1] == false) {
+        G.errorcounter++;
+        G.errorcounterarea.innerHTML = G.errorcounter;
+    }
+    if (G.gridPointer.length <= ctr[0]) {
         nextStage();
     }
 }
