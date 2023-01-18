@@ -1,0 +1,361 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+    <title>PHANGMAN (Br.E)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- link rel="shortcut icon" href="kiwi-bird.png"-->
+    <script src="./iDictBRE.js"></script>
+    <style>
+    .ipaCh{
+        width: 100%;
+        font-size: 150%;
+        font-family: Times New Roman;
+    }
+    .csn{
+        background-color: #afeeee;
+    }
+    .vwl{
+        background-color: #ffc0cb;
+    }
+    .usr{
+        background-color: #dcdcdc;
+    }
+    .cv{
+        background-color: #f4a460;
+    }
+    .non{
+        pointer-events: none;
+    }
+    .ctrl{
+        font-size: 120%;
+    }
+    #displayfield{
+        width: 100%;
+        font-size: 150%;
+        font-family: Times New Roman;
+    }
+    #keyboard{
+        width: 100%;
+    }
+    #background {
+        background-color: #D2B4DE;
+    }
+    #grid {
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        table-layout: fixed;
+        width: 50%;
+        font-family: Times New Roman;
+        font-size: 150%;
+    }
+    td,tr #grid{
+        text-align: center;
+        width: 2em;
+    }
+    ::-moz-selection { /* Code for Firefox */
+        color: rgb(0,0,0,0);
+        background: rgb(0,0,0,0);
+    }
+
+    ::selection {
+        color: rgb(0,0,0,0);
+        background: rgb(0,0,0,0);
+    }
+    #startbutton{
+        font-size: 150%;
+    }
+    #counterarea{
+        font-size: 150%;
+    }
+    #errorcounterarea{
+        font-size: 150%;
+        color: red;
+    }
+    .dlgb {
+        border: 1px solid gray;
+        padding: 20px;
+        background-color: white;
+        color: black;
+        display: inline-block;
+        position: absolute;
+        top: auto;
+        left: auto;
+        width: 70%; 
+        height: auto;
+        z-index: 5;
+    }
+    #dlgMessage,#dlgText,#dlgButton{
+        font-family: Times New Roman;
+        font-size: 150%;
+        width: 100%;
+    }
+    @media screen and (max-width: 820px) {
+        .ipaCh{
+            width: 100%;
+            font-size: 100%;
+            font-family: Times New Roman;
+        }
+        .ctrl{
+            font-size: 100%;
+        }
+        .outfield{
+            font-size: 100%;
+            font-family: Times New Roman;
+        }
+    }
+    @media screen and (max-width: 550px) {
+        .ipaCh{
+            width: 100%;
+            font-size: 70%;
+            font-family: Times New Roman;
+        }
+        .ctrl{
+            font-size: 70%;
+        }
+        .outfield{
+            font-size: 100%;
+            font-family: Times New Roman;
+        }
+    }
+    </style>
+</head>
+
+<body id="background">
+<div style="display:inline-block;"><strong>PHANGMAN (Br.E)</strong></div>
+<div style="display:inline-block; float:right;">Powered by <a href="https://github.com/JoseLlarena/Britfone" target="_blank">Britfone</a>.</div>
+<br/>
+<table id="keyboard" border="1">
+<tr>
+    <td><input type="button" id="kp" class="ipaCh csn fl" value="p" onclick="pushed('p');"></td>
+    <td><input type="button" id="kb" class="ipaCh csn fl" value="b" onclick="pushed('b');"></td>
+    <td><input type="button" id="kt" class="ipaCh csn fl" value="t" onclick="pushed('t');"></td>
+    <td><input type="button" id="kd" class="ipaCh csn fl" value="d" onclick="pushed('d');"></td>
+    <td><input type="button" id="kk" class="ipaCh csn fl" value="k" onclick="pushed('k');"></td>
+    <td><input type="button" id="kɡ" class="ipaCh csn fl" value="ɡ" onclick="pushed('ɡ');"></td>
+    <td><input type="button" id="km" class="ipaCh csn fl" value="m" onclick="pushed('m');"></td>
+    <td><input type="button" id="kn" class="ipaCh csn fl" value="n" onclick="pushed('n');"></td>
+    <td><input type="button" id="kŋ" class="ipaCh csn fl" value="ŋ" onclick="pushed('ŋ');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" id="kl" class="ipaCh csn fl" value="l" onclick="pushed('l');"></td>
+    <td><input type="button" id="kɹ" class="ipaCh csn fl" value="ɹ" onclick="pushed('ɹ');"></td>
+</tr>
+<tr>
+    <td><input type="button" id="kf" class="ipaCh csn fl" value="f" onclick="pushed('f');"></td>
+    <td><input type="button" id="kv" class="ipaCh csn fl" value="v" onclick="pushed('v');"></td>
+    <td><input type="button" id="kθ" class="ipaCh csn fl" value="θ" onclick="pushed('θ');"></td>
+    <td><input type="button" id="kð" class="ipaCh csn fl" value="ð" onclick="pushed('ð');"></td>
+    <td><input type="button" id="ks" class="ipaCh csn fl" value="s" onclick="pushed('s');"></td>
+    <td><input type="button" id="kz" class="ipaCh csn fl" value="z" onclick="pushed('z');"></td>
+    <td><input type="button" id="kʃ" class="ipaCh csn fl" value="ʃ" onclick="pushed('ʃ');"></td>
+    <td><input type="button" id="kʒ" class="ipaCh csn fl" value="ʒ" onclick="pushed('ʒ');"></td>
+    <td><input type="button" id="kh" class="ipaCh csn fl" value="h" onclick="pushed('h');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" id="kj" class="ipaCh csn fl" value="j" onclick="pushed('j');"></td>
+    <td><input type="button" id="kw" class="ipaCh csn fl" value="w" onclick="pushed('w');"></td>
+</tr>
+<tr>
+    <td><input type="button" id="ka" class="ipaCh vwl fl" value="a" onclick="pushed('a');"></td>
+    <td><input type="button" id="ke" class="ipaCh vwl fl" value="e" onclick="pushed('e');"></td>
+    <td><input type="button" id="ki" class="ipaCh vwl fl" value="i" onclick="pushed('i');"></td>
+    <td><input type="button" id="kɔ" class="ipaCh vwl fl" value="ɔ" onclick="pushed('ɔ');"></td>
+    <td><input type="button" id="ku" class="ipaCh vwl fl" value="u" onclick="pushed('u');"></td>
+    <td><input type="button" id="kɐ" class="ipaCh vwl fl" value="ɐ" onclick="pushed('ɐ');"></td>
+    <td><input type="button" id="kə" class="ipaCh vwl fl" value="ə" onclick="pushed('ə');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+</tr>
+<tr>
+    <td><input type="button" id="kæ" class="ipaCh vwl fl" value="æ" onclick="pushed('æ');"></td>
+    <td><input type="button" id="kɛ" class="ipaCh vwl fl" value="ɛ" onclick="pushed('ɛ');"></td>
+    <td><input type="button" id="kɪ" class="ipaCh vwl fl" value="ɪ" onclick="pushed('ɪ');"></td>
+    <td><input type="button" id="kɒ" class="ipaCh vwl fl" value="ɒ" onclick="pushed('ɒ');"></td>
+    <td><input type="button" id="kʊ" class="ipaCh vwl fl" value="ʊ" onclick="pushed('ʊ');"></td>
+    <td><input type="button" id="kɑ" class="ipaCh vwl fl" value="ɑ" onclick="pushed('ɑ');"></td>
+    <td><input type="button" id="kɜ" class="ipaCh vwl fl" value="ɜ" onclick="pushed('ɜ');"></td>
+    <td><input type="button" id="kː" class="ipaCh vwl fl" value="ː" onclick="pushed('ː');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+</tr>
+</table>
+
+<input type="button" id="startbutton" value="START" onclick="restart();">
+<br/>
+Turn No.: <span id="counterarea"></span>&nbsp;&nbsp;
+Errors: <span id="errorcounterarea"></span>
+<table border="1" id="grid">
+<tr><td>?</td></tr>
+</table>
+
+<div id="dialogbox" class="dlgb" style="visibility: hidden;">
+<div id="dlgMessage"></div>
+<input type="text" id="dlgText" spellcheck="false" autocomplete="off"><br/><br/>
+<input type="button" id="dlgButton" value="Check" onclick="closeDialog();">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script src="./RandomCongrats.js"></script>
+
+<script>
+class GlobalManager {
+    constructor() {
+        this.consonants = "pbtdkɡmnŋlɹfvθðszʃʒhjw".split("");
+        this.vowels = "aeiɔuɐəæɛɪɒʊɑɜː".split("");
+        this.dictionary = Object.keys(iDict);
+        this.gridPointer = [];
+        this.counterarea = document.getElementById("counterarea");
+        this.counter = 0;
+        this.errorcounterarea = document.getElementById("errorcounterarea");
+        this.grid = document.getElementById("grid");
+        this.answerInIPA = "";
+        this.answerInCh = [];
+        this.randomCongrats = new RandomCongrats();
+        this.startbutton = document.getElementById("startbutton");
+        this.dialogbox = document.getElementById("dialogbox");
+        this.dlgMessage = document.getElementById("dlgMessage");
+        this.dlgText = document.getElementById("dlgText");
+        this.dlgButton = document.getElementById("dlgButton");
+    }
+}
+
+const G = new GlobalManager();
+
+function randomSelection() {
+    while(true) {
+        const r = Math.trunc(Math.random() * G.dictionary.length);
+        if (G.dictionary[r].length > 5) {
+            return [G.dictionary[r], iDict[G.dictionary[r]]];
+        }
+    }
+}
+
+function buildTable(str) {
+    while(G.grid.firstChild) {
+        G.grid.removeChild(G.grid.lastChild);
+    }
+    G.gridPointer = [];
+    let newRow = G.grid.insertRow();
+    str = str.replaceAll("\u0301", "");
+    str = str.replaceAll("\u0300", "");
+    let ar = str.split("");
+    for (let ch of ar) {
+        let newCell = newRow.insertCell();
+        newCell.style.color = "white";
+        let tn = document.createTextNode(ch);
+        newCell.appendChild(tn);
+        G.gridPointer.push([ch, newCell]);
+    }
+    G.counterarea.innerHTML = G.counter = 0;
+    G.errorcounterarea.innerHTML  = 0;
+}
+
+function incrementCounter() {
+    G.counter++;
+    G.counterarea.innerHTML = G.counter;
+}
+
+function checkUp(ch) {
+    const id = document.getElementById("k" + ch);
+    id.disabled = true;
+    let ctr = 0;
+    for (c of G.gridPointer) {
+        if (c[0] == ch) {
+            c[1].style.color = "black";
+        } else {
+        }
+        if (c[1].style.color == "black") {
+            ctr++;
+        }
+    }
+    return ctr;
+}
+
+function pushed(ch) {
+    incrementCounter();
+    let ctr = checkUp(ch);
+    G.errorcounterarea.innerHTML = G.counter - ctr;
+    if (G.gridPointer.length <= ctr) {
+        nextStage();
+    }
+}
+
+function nextStage() {
+    let a = openDialog();
+}
+
+function restart() {
+    const ckey = document.getElementsByClassName("csn");
+    for (let elem of ckey) {
+        elem.disabled = false;
+    }
+    const vkey = document.getElementsByClassName("vwl");
+    for (let elem of vkey) {
+        elem.disabled = false;
+    }
+    let a = randomSelection();
+//    console.log(a[0]);
+    for (let i of a[1]) {
+//        console.log("   " + i);
+    }
+    G.answerInIPA = a[0];
+    G.answerInCh = a[1];
+    buildTable(a[0]);
+}
+
+function openDialog() {
+    const ckey = document.getElementsByClassName("csn");
+    for (let elem of ckey) {
+        elem.disabled = true;
+    }
+    const vkey = document.getElementsByClassName("vwl");
+    for (let elem of vkey) {
+        elem.disabled = true;
+    }
+    G.startbutton.disabled = true;
+    G.dlgMessage.innerHTML = "Enter the spelling for [" + G.answerInIPA + "]";
+    G.dlgText.value = "";
+    G.dialogbox.style.visibility = "visible";
+    G.dlgText.focus();
+}
+
+function closeDialog() {
+    G.dialogbox.style.visibility = "hidden";
+    const ckey = document.getElementsByClassName("csn");
+    for (let elem of ckey) {
+        elem.disabled = false;
+    }
+    const vkey = document.getElementsByClassName("vwl");
+    for (let elem of vkey) {
+        elem.disabled = false;
+    }
+    G.startbutton.disabled = false;
+    let a = G.dlgText.value.toLowerCase();
+    for (let w of G.answerInCh) {
+        if (a == w) {
+            G.randomCongrats.do(0);
+            return;
+        }
+    }
+    let result = "";
+    for (let w of G.answerInCh) {
+        result += w + "\n";
+    }
+    alert(result);
+}
+
+G.dlgText.addEventListener("keydown", (evt) => {
+    if (evt.key == "Enter") {
+        closeDialog();
+    }
+});
+
+restart();
+
+</script>
+</body>
+</html>
