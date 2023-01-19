@@ -191,6 +191,14 @@ Errors: <span id="errorcounterarea"></span>
 <table border="1" id="grid">
 <tr><td>?</td></tr>
 </table>
+<p>This dictionary (Britfone) uses narrow notation, so please use:
+<ul>
+<li>[ɛ] instead of /e/</li>
+<li>[ɐ] instead of /ʌ/</li>
+<li>[ɜː] instead of /əː/</li>
+<li>[ɹ] instead of /r/</li>
+</ul>
+</p>
 
 <div id="dialogbox" class="dlgb" style="visibility: hidden;">
 <div id="dlgMessage"></div>
@@ -347,7 +355,7 @@ function closeDialog() {
             return;
         }
     }
-    let result = "";
+    let result = "You put '" + a + "' ... but\n";
     for (let w of G.answerInCh) {
         result += w + "\n";
     }
