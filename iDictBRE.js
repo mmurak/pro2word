@@ -1,3 +1,4 @@
+// Copyright (C) 2017 Britfone  https://github.com/JoseLlarena/Britfone/blob/master/LICENSE.txt
 const iDict = {
 "kəz": ["'cos"],
 "d": ["'d"],
