@@ -117,13 +117,33 @@
             font-size: 100%;
             font-family: Times New Roman;
         }
+        .header{
+            font-size: 70%;
+        }
+    }
+    @media screen and (max-width: 400px) {
+        .ipaCh{
+            width: 100%;
+            font-size: 50%;
+            font-family: Times New Roman;
+        }
+        .ctrl{
+            font-size: 50%;
+        }
+        .outfield{
+            font-size: 100%;
+            font-family: Times New Roman;
+        }
+        .header{
+            font-size: 50%;
+        }
     }
     </style>
 </head>
 
 <body id="background">
-<div style="display:inline-block;"><strong>PHANGMAN (Am.E)</strong></div>
-<div style="display:inline-block; float:right;">Powered by <a href="https://github.com/cmusphinx/cmudict" target="_blank">CMU dict(10k)</a>.</div>
+<div style="display:inline-block;" class="header"><strong>PHANGMAN (Am.E)</strong></div>
+<div style="display:inline-block; float:right;" class="header">Powered by <a href="https://github.com/cmusphinx/cmudict" target="_blank">CMU dict(10k)</a>.</div>
 <br/>
 <table id="keyboard" border="1">
 <tr>
@@ -184,12 +204,14 @@
 </tr>
 </table>
 
+<div class="header">
 <input type="button" id="startbutton" value="START" onclick="restart();">
 Turn No.: <span id="counterarea"></span>&nbsp;&nbsp;
 Errors: <span id="errorcounterarea"></span>
 <table border="1" id="grid">
 <tr><td>?</td></tr>
 </table>
+</div>
 
 <div id="dialogbox" class="dlgb" style="visibility: hidden;">
 <div id="dlgMessage"></div>
