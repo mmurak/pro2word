@@ -213,6 +213,10 @@
 <input type="button" id="startbutton" value="START" onclick="restart();">
 Turn No.: <span id="counterarea"></span>&nbsp;&nbsp;
 Errors: <span id="errorcounterarea"></span>
+<span style="float: right">
+<label for="soundcheck">🔈</label>
+<input type="checkbox" id="soundcheck" checked></input>
+</span><br/>
 <table border="1" id="grid" class="ipaCh">
 <tr><td>?</td></tr>
 </table>
@@ -247,6 +251,14 @@ class GlobalManager {
         this.dlgMessage = document.getElementById("dlgMessage");
         this.dlgText = document.getElementById("dlgText");
         this.dlgButton = document.getElementById("dlgButton");
+        this.soundHit = "./sounds/hit.mp3";
+        this.soundMissed = "./sounds/missed.mp3";
+        this.soundNextStage = "./sounds/nextStage.mp3";
+        this.soundWin = "./sounds/win.mp3";
+        this.soundLose = "./sounds/lose.mp3";
+        this.soundCheck = document.getElementById("soundcheck");
+        this.audioArray = [];
+        this.audioArrayMax = 5;
     }
 }
 
@@ -308,10 +320,14 @@ function pushed(ch) {
     incrementCounter();
     let ctr = checkUp(ch);
     if (ctr[1] == false) {
+        playSound(G.soundMissed);
         G.errorcounter++;
         G.errorcounterarea.innerHTML = G.errorcounter;
+    } else {
+        playSound(G.soundHit);
     }
     if (G.gridPointer.length <= ctr[0]) {
+        playSound(G.soundNextStage);
         nextStage();
     }
 }
@@ -339,6 +355,17 @@ function restart() {
     buildTable(a[0]);
 }
 
+function playSound(sound) {
+    if (G.soundCheck.checked) {
+        let audio = new Audio(sound);
+        audio.play();
+        G.audioArray.push(audio);
+        if (G.audioArray.length > G.audioArrayMax) {
+            G.audioArray.shift();
+        }
+    }
+}
+
 function openDialog() {
     const ckey = document.getElementsByClassName("csn");
     for (let elem of ckey) {
@@ -357,27 +384,23 @@ function openDialog() {
 
 function closeDialog() {
     G.dialogbox.style.visibility = "hidden";
-    const ckey = document.getElementsByClassName("csn");
-    for (let elem of ckey) {
-        elem.disabled = false;
-    }
-    const vkey = document.getElementsByClassName("vwl");
-    for (let elem of vkey) {
-        elem.disabled = false;
-    }
     G.startbutton.disabled = false;
     let a = G.dlgText.value.toLowerCase();
     for (let w of G.answerInCh) {
         if (a == w) {
+            playSound(G.soundWin);
             G.randomCongrats.do(0);
             return;
         }
     }
+    playSound(G.soundLose);
     let result = "You put '" + a + "' ... but It's\n";
     for (let w of G.answerInCh) {
         result += w + "\n";
     }
-    alert(result);
+    setTimeout(() => {
+        alert(result);
+    }, 1000);
 }
 
 G.dlgText.addEventListener("keydown", (evt) => {

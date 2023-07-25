@@ -25,6 +25,7 @@
     }
     .non{
         pointer-events: none;
+        background-color: #7CA6F2;
     }
     .ctrl{
         font-size: 120%;
@@ -45,13 +46,13 @@
         margin-right: auto;
         background-color: white;
         table-layout: fixed;
-        width: 50%;
+        width: 80%;
         font-family: Times New Roman;
-        font-size: 150%;
+        font-size: 200%;
     }
     td,tr #grid{
         text-align: center;
-        width: 1em;
+        width: 10%;
     }
     ::-moz-selection { /* Code for Firefox */
         color: rgb(0,0,0,0);
@@ -93,49 +94,49 @@
     @media screen and (max-width: 820px) {
         .ipaCh{
             width: 100%;
-            font-size: 100%;
+            font-size: 200%;
             font-family: Times New Roman;
         }
         .ctrl{
-            font-size: 100%;
+            font-size: 200%;
         }
         .outfield{
-            font-size: 100%;
+            font-size: 200%;
             font-family: Times New Roman;
         }
     }
     @media screen and (max-width: 550px) {
         .ipaCh{
             width: 100%;
-            font-size: 70%;
+            font-size: 150%;
             font-family: Times New Roman;
         }
         .ctrl{
-            font-size: 70%;
+            font-size: 150%;
         }
         .outfield{
-            font-size: 100%;
+            font-size: 150%;
             font-family: Times New Roman;
         }
         .header{
-            font-size: 70%;
+            font-size: 100%;
         }
     }
     @media screen and (max-width: 400px) {
         .ipaCh{
             width: 100%;
-            font-size: 50%;
+            font-size: 150%;
             font-family: Times New Roman;
         }
         .ctrl{
-            font-size: 50%;
+            font-size: 120%;
         }
         .outfield{
             font-size: 100%;
             font-family: Times New Roman;
         }
         .header{
-            font-size: 50%;
+            font-size: 80%;
         }
     }
     </style>
@@ -156,9 +157,7 @@
     <td><input type="button" id="km" class="ipaCh csn fl" value="m" onclick="pushed('m');"></td>
     <td><input type="button" id="kn" class="ipaCh csn fl" value="n" onclick="pushed('n');"></td>
     <td><input type="button" id="kŋ" class="ipaCh csn fl" value="ŋ" onclick="pushed('ŋ');"></td>
-    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
-    <td><input type="button" id="kl" class="ipaCh csn fl" value="l" onclick="pushed('l');"></td>
-    <td><input type="button" id="kr" class="ipaCh csn fl" value="r" onclick="pushed('r');"></td>
+    <td><input type="button" id="kh" class="ipaCh csn fl" value="h" onclick="pushed('h');"></td>
 </tr>
 <tr>
     <td><input type="button" id="kf" class="ipaCh csn fl" value="f" onclick="pushed('f');"></td>
@@ -169,37 +168,43 @@
     <td><input type="button" id="kz" class="ipaCh csn fl" value="z" onclick="pushed('z');"></td>
     <td><input type="button" id="kʃ" class="ipaCh csn fl" value="ʃ" onclick="pushed('ʃ');"></td>
     <td><input type="button" id="kʒ" class="ipaCh csn fl" value="ʒ" onclick="pushed('ʒ');"></td>
-    <td><input type="button" id="kh" class="ipaCh csn fl" value="h" onclick="pushed('h');"></td>
     <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
-    <td><input type="button" id="kj" class="ipaCh csn fl" value="j" onclick="pushed('j');"></td>
-    <td><input type="button" id="kw" class="ipaCh csn fl" value="w" onclick="pushed('w');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
 </tr>
 <tr>
+    <td><input type="button" id="kj" class="ipaCh csn fl" value="j" onclick="pushed('j');"></td>
+    <td><input type="button" id="kw" class="ipaCh csn fl" value="w" onclick="pushed('w');"></td>
+    <td><input type="button" id="kl" class="ipaCh csn fl" value="l" onclick="pushed('l');"></td>
+    <td><input type="button" id="kr" class="ipaCh csn fl" value="r" onclick="pushed('r');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
     <td><input type="button" id="ka" class="ipaCh vwl fl" value="a" onclick="pushed('a');"></td>
     <td><input type="button" id="ke" class="ipaCh vwl fl" value="e" onclick="pushed('e');"></td>
     <td><input type="button" id="ki" class="ipaCh vwl fl" value="i" onclick="pushed('i');"></td>
     <td><input type="button" id="ko" class="ipaCh vwl fl" value="o" onclick="pushed('o');"></td>
     <td><input type="button" id="ku" class="ipaCh vwl fl" value="u" onclick="pushed('u');"></td>
-    <td><input type="button" id="kʌ" class="ipaCh vwl fl" value="ʌ" onclick="pushed('ʌ');"></td>
-    <td><input type="button" id="kə" class="ipaCh vwl fl" value="ə" onclick="pushed('ə');"></td>
-    <td><input type="button" id="kɚ" class="ipaCh vwl fl" value="ɚ" onclick="pushed('ɚ');"></td>
-    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
 </tr>
 <tr>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
     <td><input type="button" id="kæ" class="ipaCh vwl fl" value="æ" onclick="pushed('æ');"></td>
     <td><input type="button" id="kɛ" class="ipaCh vwl fl" value="ɛ" onclick="pushed('ɛ');"></td>
     <td><input type="button" id="kɪ" class="ipaCh vwl fl" value="ɪ" onclick="pushed('ɪ');"></td>
     <td><input type="button" id="kɔ" class="ipaCh vwl fl" value="ɔ" onclick="pushed('ɔ');"></td>
     <td><input type="button" id="kʊ" class="ipaCh vwl fl" value="ʊ" onclick="pushed('ʊ');"></td>
+</tr>
+<tr>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
+    <td><input type="button" id="kʌ" class="ipaCh vwl fl" value="ʌ" onclick="pushed('ʌ');"></td>
+    <td><input type="button" id="kə" class="ipaCh vwl fl" value="ə" onclick="pushed('ə');"></td>
+    <td><input type="button" id="kɚ" class="ipaCh vwl fl" value="ɚ" onclick="pushed('ɚ');"></td>
     <td><input type="button" id="kɑ" class="ipaCh vwl fl" value="ɑ" onclick="pushed('ɑ');"></td>
-    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
-    <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
     <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
 </tr>
 </table>
@@ -208,7 +213,11 @@
 <input type="button" id="startbutton" value="START" onclick="restart();">
 Turn No.: <span id="counterarea"></span>&nbsp;&nbsp;
 Errors: <span id="errorcounterarea"></span>
-<table border="1" id="grid">
+<span style="float: right">
+<label for="soundcheck">🔈</label>
+<input type="checkbox" id="soundcheck" checked></input>
+</span><br/>
+<table border="1" id="grid" class="ipaCh">
 <tr><td>?</td></tr>
 </table>
 </div>
@@ -242,6 +251,14 @@ class GlobalManager {
         this.dlgMessage = document.getElementById("dlgMessage");
         this.dlgText = document.getElementById("dlgText");
         this.dlgButton = document.getElementById("dlgButton");
+        this.soundHit = "./sounds/hit.mp3";
+        this.soundMissed = "./sounds/missed.mp3";
+        this.soundNextStage = "./sounds/nextStage.mp3";
+        this.soundWin = "./sounds/win.mp3";
+        this.soundLose = "./sounds/lose.mp3";
+        this.soundCheck = document.getElementById("soundcheck");
+        this.audioArray = [];
+        this.audioArrayMax = 5;
     }
 }
 
@@ -303,10 +320,14 @@ function pushed(ch) {
     incrementCounter();
     let ctr = checkUp(ch);
     if (ctr[1] == false) {
+        playSound(G.soundMissed);
         G.errorcounter++;
         G.errorcounterarea.innerHTML = G.errorcounter;
+    } else {
+        playSound(G.soundHit);
     }
     if (G.gridPointer.length <= ctr[0]) {
+        playSound(G.soundNextStage);
         nextStage();
     }
 }
@@ -325,13 +346,24 @@ function restart() {
         elem.disabled = false;
     }
     let a = randomSelection();
-//    console.log(a[0]);
+//    console.log(a[0]);     //////////
     for (let i of a[1]) {
-//        console.log("   " + i);
+//        console.log("   " + i);     //////////
     }
     G.answerInIPA = a[0];
     G.answerInCh = a[1];
     buildTable(a[0]);
+}
+
+function playSound(sound) {
+    if (G.soundCheck.checked) {
+        let audio = new Audio(sound);
+        audio.play();
+        G.audioArray.push(audio);
+        if (G.audioArray.length > G.audioArrayMax) {
+            G.audioArray.shift();
+        }
+    }
 }
 
 function openDialog() {
@@ -352,27 +384,23 @@ function openDialog() {
 
 function closeDialog() {
     G.dialogbox.style.visibility = "hidden";
-    const ckey = document.getElementsByClassName("csn");
-    for (let elem of ckey) {
-        elem.disabled = false;
-    }
-    const vkey = document.getElementsByClassName("vwl");
-    for (let elem of vkey) {
-        elem.disabled = false;
-    }
     G.startbutton.disabled = false;
     let a = G.dlgText.value.toLowerCase();
     for (let w of G.answerInCh) {
         if (a == w) {
+            playSound(G.soundWin);
             G.randomCongrats.do(0);
             return;
         }
     }
-    let result = "You put '" + a + "' ... but\n";
+    playSound(G.soundLose);
+    let result = "You put '" + a + "' ... but It's\n";
     for (let w of G.answerInCh) {
         result += w + "\n";
     }
-    alert(result);
+    setTimeout(() => {
+        alert(result);
+    }, 1000);
 }
 
 G.dlgText.addEventListener("keydown", (evt) => {
