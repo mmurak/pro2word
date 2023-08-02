@@ -6,37 +6,66 @@
     <link rel="shortcut icon" href="red-kiwi-bird.png">
     <script src="./iDict.js"></script>
     <style>
+    header{
+        position: sticky;
+        top: 0;
+        background-color: #EBF5FB;
+        margin: 0;
+        padding: 5px;
+        border: 1px solid #000;
+    }
     .ctrl{
         font-size: 150%;
         font-family: Times New Roman;
     }
-    .outarea{
-        font-size: 150%;
-        font-family: Times New Roman;
-        color: black;
-    }
     #background {
-        background-color: #F9EBEA;
+        background-color: white;
+    }
+    #title{
+        display: inline-block;
+    }
+    .credit{
+        display: inline-block;
+        float: right;
+    }
+    #outputDivision{
+        width: 100%;
+    }
+    #tableArea{
+        font-family: "Times New Roman";
+        font-size: 150%;
+        background-color: white;
     }
     </style>
 </head>
 
 <body id="background">
-<div style="display:inline-block;"><strong>Word to Pronunciation Search (Am.E)</strong></div>
-<div style="display:inline-block; float:right;">Powered by Carnegie Mellon University's <a href="https://github.com/cmusphinx/cmudict" target="_blank">CMUdict</a>.</div>
-<br/>
-<input type="text" id="inarea" class="ctrl" onfocus="this.select();" spellcheck="false" autocomplete="off">
-<input type="button" class="ctrl" value="Clear" onclick="clearAreas();">
-<div style="display:inline-block; float:right;">to <a href="index.html">P -> W</a></div>
-<br/>
-<input type="checkbox" id="startw" class="ctrl" checked onchange="search();">Start with
-<input type="checkbox" id="endw" class="ctrl" onchange="search();">End with
-<br/>
-<textarea id="outarea" class="outarea" rows="20" cols="40" spellcheck="false" autocomplete="off" disabled></textarea>
+        <header>
+            <div id="title">
+                <strong>Word to Pronunciation Search (Am.E)</strong>
+            </div>
+            <div class="credit">
+                Powered by Carnegie Mellon University's <a href="https://github.com/cmusphinx/cmudict" target="_blank">CMUdict</a>.
+            </div>
+            <br/>
+            <input type="text" id="inarea" class="ctrl" onfocus="this.select();" spellcheck="false" autocomplete="off">
+            <input type="button" class="ctrl" value="Clear" onclick="clearAreas();">
+            <div class="credit">
+                to <a href="index.html">P -> W</a>
+            </div>
+            <br/>
+            <input type="checkbox" id="startw" class="ctrl" checked onchange="search();">Start with
+            <input type="checkbox" id="endw" class="ctrl" onchange="search();">End with
+            <br/>
+        </header>
+        <div id="outputDivision">
+            <table id="tableArea">
+            </table>
+        </div>
 
 <script>
 const inarea = document.getElementById("inarea");
-const outarea = document.getElementById("outarea");
+const tableArea = document.getElementById("tableArea");
 const startwith = document.getElementById("startw");
 const endwith = document.getElementById("endw");
 
@@ -58,7 +87,7 @@ let sortedKeys = Object.keys(searchDict).sort();
 function search() {
     let target = inarea.value.toLowerCase();
     if (target == "") {
-        outarea.value = "";
+        tableArea.innerHTML = "";
         inarea.style = "background-color: white;";
         return;
     }
@@ -70,12 +99,12 @@ function search() {
     for (let key of sortedKeys) {
         if (re.test(key)) {
             if (candidateCount++ > 300) {
-                outarea.value = "";
+                tableArea.innerHTML = "";
                 inarea.style = "background-color: #E0F2F7;";
                 return;
             }
             searchDict[key].split(/,/).forEach(pron => {
-                    outset.add(key + "  /" + pron + "/");
+                outset.add(key + "\t" + pron);
             });
         }
     }
@@ -84,16 +113,21 @@ function search() {
     } else {
         inarea.style = "background-color: #E0F8E0;";
     }
-    outarea.value = "";
+    tableArea.innerHTML = "";
     Array.from(outset).sort().forEach(elem => {
-        outarea.value += elem + "\n";
+        let tuple = elem.split(/\t/);
+        let newRow = tableArea.insertRow(-1);
+        let wordCol = newRow.insertCell(-1);
+        wordCol.innerHTML = tuple[0];
+        let pronCol = newRow.insertCell(-1);
+        pronCol.innerHTML = "/" + tuple[1] + "/";
     });
 }
 
 function clearAreas() {
     inarea.value = "";
-    outarea.value = "";
     inarea.style = "background-color: white;";
+    tableArea.innerHTML = "";
     inarea.focus();
 }
 
