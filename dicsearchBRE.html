@@ -59,6 +59,7 @@ function search() {
     let target = inarea.value.toLowerCase();
     if (target == "") {
         outarea.value = "";
+        inarea.style = "background-color: white;";
         return;
     }
     if (startwith.checked) target = prefix + target;
@@ -70,12 +71,18 @@ function search() {
         if (re.test(key)) {
             if (candidateCount++ > 300) {
                 outarea.value = "";
+                inarea.style = "background-color: #E0F2F7;";
                 return;
             }
             searchDict[key].split(/,/).forEach(pron => {
                     outset.add(key + "  /" + pron + "/");
             });
         }
+    }
+    if (candidateCount == 0) {
+        inarea.style = "background-color: #F8E0E0;";
+    } else {
+        inarea.style = "background-color: #E0F8E0;";
     }
     outarea.value = "";
     Array.from(outset).sort().forEach(elem => {
