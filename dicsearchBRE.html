@@ -75,7 +75,7 @@ function search() {
                 return;
             }
             searchDict[key].split(/,/).forEach(pron => {
-                    outset.add(key + "  /" + pron + "/");
+                    outset.add(key + "  [" + pron + "]");
             });
         }
     }
