@@ -6,10 +6,14 @@
     <link rel="shortcut icon" href="red-kiwi-bird.png">
     <script src="./iDict.js"></script>
     <style>
+    table{
+        table-layout: fixed;
+    }
     .ipaCh{
         width: 100%;
         font-size: 150%;
         font-family: Times New Roman;
+        paddiing: 0;
     }
     .csn{
         background-color: #afeeee;
@@ -198,13 +202,13 @@
 <tr>
     <td><input type="button" class="ipaCh cv fl" value="C" onclick="pushed('C');"></td>
     <td><input type="button" class="ipaCh cv fl" value="V" onclick="pushed('V');"></td>
-    <td><input type="button" class="ipaCh usr fl" value="-1-" onclick="funcCh(1);"></td>
-    <td><input type="button" class="ipaCh usr fl" value="-2-" onclick="funcCh(2);"></td>
-    <td><input type="button" class="ipaCh usr fl" value="-3-" onclick="funcCh(3);"></td>
-    <td><input type="button" class="ipaCh usr fl" value="-4-" onclick="funcCh(4);"></td>
-    <td><input type="button" class="ipaCh usr fl" value="-5-" onclick="funcCh(5);"></td>
-    <td><input type="button" class="ipaCh usr fl" value="-6-" onclick="funcCh(6);"></td>
-    <td><input type="button" class="ipaCh usr fl" value="-7-" onclick="funcCh(7);"></td>
+    <td><input type="button" id="f1" class="ipaCh usr fl" value="-1-" onclick="funcCh(1);"></td>
+    <td><input type="button" id="f2" class="ipaCh usr fl" value="-2-" onclick="funcCh(2);"></td>
+    <td><input type="button" id="f3" class="ipaCh usr fl" value="-3-" onclick="funcCh(3);"></td>
+    <td><input type="button" id="f4" class="ipaCh usr fl" value="-4-" onclick="funcCh(4);"></td>
+    <td><input type="button" id="f5" class="ipaCh usr fl" value="-5-" onclick="funcCh(5);"></td>
+    <td><input type="button" id="f6" class="ipaCh usr fl" value="-6-" onclick="funcCh(6);"></td>
+    <td><input type="button" id="f7" class="ipaCh usr fl" value="-7-" onclick="funcCh(7);"></td>
     <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
     <td><input type="button" class="ipaCh non fl" value="" onclick="pushed('');"></td>
     <td><input type="checkbox" class="ipaCh checkboxer fl" id="recBtn" value="+"><label class="label" for="recBtn">Reg</label></td>
@@ -300,6 +304,16 @@ class GlobalManager {
             "",
         ];
         this.presetPointer;
+        this.fkeyPtr = [];
+        for (let i = 1; i <= this.presetArray.length; i++) {
+            let fk = document.getElementById("f" + i);
+            this.fkeyPtr.push(fk);
+            if (this.presetArray[i-1] == "") {
+                fk.value = "-" + i + "-";
+            } else {
+                fk.value = "[" + this.presetArray[i-1] + "]";
+            }
+        }
     }
 }
 
@@ -354,7 +368,12 @@ function convert(text) {
 function search() {
     G.outarea.value = "";
     let target = convert(G.displayfield.value);
-    let re = new RegExp(target);
+    let re = null;
+    try {
+        re = new RegExp(target);
+    } catch(error) {
+        return;
+    }
     outset = new Set();
     let candidateCount = 0;
     for (let [key, value] of Object.entries(searchDict)) {
@@ -446,6 +465,7 @@ function openTAdialog() {
 
 function processTAdialog() {
     G.presetArray[G.presetPointer] = G.configfield.value;
+    G.fkeyPtr[G.presetPointer].value = "[" + G.configfield.value + "]";
     closeTAdialog();
 }
 
