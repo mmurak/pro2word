@@ -42,17 +42,14 @@
 <body id="background">
         <header>
             <div id="title">
-                <strong>Word to Pronunciation Search (Am.E)</strong>
+                <strong>Word→Pronunciation Search (<a href="https://github.com/cmusphinx/cmudict" target="_blank">CMUdict</a>)</strong>
             </div>
             <div class="credit">
-                Powered by Carnegie Mellon University's <a href="https://github.com/cmusphinx/cmudict" target="_blank">CMUdict</a>.
+                to <a href="index.html">P→W</a>
             </div>
             <br/>
             <input type="text" id="inarea" class="ctrl" onfocus="this.select();" spellcheck="false" autocomplete="off">
             <input type="button" class="ctrl" value="Clear" onclick="clearAreas();">
-            <div class="credit">
-                to <a href="index.html">P -> W</a>
-            </div>
             <br/>
             <input type="checkbox" id="startw" class="ctrl" checked onchange="search();">Start with
             <input type="checkbox" id="endw" class="ctrl" onchange="search();">End with
