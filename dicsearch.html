@@ -90,7 +90,12 @@ function search() {
     }
     if (startwith.checked) target = prefix + target;
     if (endwith.checked) target = target + suffix;
-    let re = new RegExp(target);
+    let re = null;
+    try {
+        re = new RegExp(target);
+    } catch(error) {
+        return;
+    }
     outset = new Set();
     let candidateCount = 0;
     for (let key of sortedKeys) {
