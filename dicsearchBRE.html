@@ -120,7 +120,8 @@ function search() {
         let tuple = elem.split(/\t/);
         let newRow = tableArea.insertRow(-1);
         let wordCol = newRow.insertCell(-1);
-        wordCol.innerHTML = tuple[0];
+        let qword = tuple[0].replaceAll("'", "\\'");
+        wordCol.innerHTML = "<a href=\"javascript:gsearch('" + qword + "');\">" + tuple[0] + "</a>";
         let pronCol = newRow.insertCell(-1);
         pronCol.innerHTML = "[" + tuple[1] + "]";
     });
@@ -131,6 +132,10 @@ function clearAreas() {
     inarea.style = "background-color: white;";
     tableArea.innerHTML = "";
     inarea.focus();
+}
+
+function gsearch(word) {
+    window.open("https://www.google.com/search?q=" + word, "_blank", "noopener, noreferrer"); 
 }
 
 inarea.focus();
