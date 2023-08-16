@@ -7,6 +7,7 @@ class RandomCongrats {
             this.star,
             this.fireworks,
             this.schoolPride,
+            this.newMode,
         ];
     }
     do(p) {
@@ -121,6 +122,27 @@ class RandomCongrats {
                 ...defaults,
                 particleCount: 10,
                 scalar: 0.75,
+            });
+        }
+    }
+    newMode() {
+        setTimeout(_shoots, 0);
+        setTimeout(_shoots, 300);
+        setTimeout(_shoots, 600);
+        setTimeout(_shoots, 900);
+        setTimeout(_shoots, 1200);
+        setTimeout(_shoots, 1500);
+        function _shoots() {
+            confetti({
+                particleCount: 100,
+                startVelocity: 30,
+                spread: 360,
+                shapes: ['star', 'square', 'square', 'circle', 'square'],
+                origin: {
+                    x: Math.random(),
+                    // since they fall down, start a bit higher than random
+                    y: Math.random() - 0.2
+                }
             });
         }
     }
