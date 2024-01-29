@@ -176,7 +176,7 @@ function makeLink(word) {
 
 G.court1.addEventListener("keydown", (e) => {
 	if (e.key == "Enter") {
-		let eWord = G.court1.value;
+		let eWord = G.court1.value.toLowerCase();
 		if (eWord == "") return;
 		let s2 = eWord.substr(0, G.restriction);
 		if (s2 != G.theme) {
