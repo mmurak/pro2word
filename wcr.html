@@ -1,0 +1,200 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+	<title>Word to Pronunciation Search (Br.E)</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+	<style>
+		.decor{
+			font-size: 200%;
+		}
+	</style>
+</head>
+<body>
+<input type="button" class="decor" value="Start" onclick="gameStart();"></input>
+<br/>
+<label for="DISP1" class="decor">お題：</label><span id="DISP1" class="decor"></span>
+<br/>
+<input type="textfield" id="Court1" class="decor"></input>
+<input type="button" id="PassButton" class="decor"value="Pass" onclick="pass();" disabled></input>
+<br/>
+<div id="TextArea" class="decor"></div>
+<script src="./iDict.js"></script>
+<script>
+class GlobalManager {
+	constructor() {
+		this.displayArea = document.getElementById("DISP1");
+		this.court1 = document.getElementById("Court1");
+		this.passButton = document.getElementById("PassButton");
+		this.tArea = document.getElementById("TextArea");
+		this.counter = 0;
+		this.theme = "";
+		this.restriction = 2;
+		this.donePool = [];
+	}
+}
+
+class WordChainManager {
+	constructor(idict) {
+		this.wordFinder = {};
+		let listOfWords = {};
+		for (const k in idict) {
+			const datArray = idict[k];
+			for (const ent of datArray) {
+				if (ent.match(/^[a-zA-Z]+$/)) {
+					listOfWords[ent] = 1;
+				}
+			}
+		}
+
+		for (const k in listOfWords) {
+			let s2 = k.substr(0, G.restriction);
+			if (s2.length < G.restriction) continue;
+			if (!(s2 in this.wordFinder)) {
+				this.wordFinder[s2] = k;
+			} else {
+				this.wordFinder[s2]+= ":" + k;
+			}
+		}
+	}
+
+	getTheWord(str) {
+		const s2 = str.substr(0, G.restriction);
+		const eArray = this._getEntryArray(s2);
+		return eArray[Math.trunc(Math.random() * eArray.length)];
+	}
+	removeTheWord(str) {
+		const s2 = str.substr(0, G.restriction);
+		let eArray = this._getEntryArray(s2);
+		const b4n = eArray.length;
+		eArray = eArray.filter(n => n !== str);
+		const aftN = eArray.length;
+		if (aftN == 0) {
+			delete this.wordFinder[s2];
+		} else {
+			this.wordFinder[s2] = eArray.join(":");
+		}
+		if (b4n != aftN) {
+			return str;
+		} else {
+			return null;
+		}
+	}
+	_getEntryArray(s2) {
+		if (!(s2 in this.wordFinder)) {
+			return [];
+		}
+		const entries = this.wordFinder[s2];
+		return entries.split(":");
+	}
+	checkTheWord(str) {
+		const s2 = str.substr(0, G.restriction);
+		let arr = this._getEntryArray(s2);
+		return arr.indexOf(str) >= 0;
+	}
+}
+
+let G = new GlobalManager();
+let computer = new WordChainManager(iDict);
+
+G.displayArea.innerHTML = "";
+G.court1.value = "";
+G.tArea.innerHTML = "";
+
+function gameStart() {
+	const keyArray = Object.keys(computer.wordFinder);
+	let s2;
+	let e2;
+	let candidate;
+	do {
+		const sidx = Math.trunc(Math.random() * keyArray.length);
+		s2 = keyArray[sidx];
+		candidate = computer.getTheWord(s2);
+		e2 = candidate.slice(-G.restriction);
+	} while (computer._getEntryArray(e2).length <= 1);
+	G.displayArea.innerHTML = e2;
+	G.theme = e2;
+	G.counter = 0;
+	G.tArea.innerHTML = "";
+	G.court1.value = "";
+	computer.removeTheWord(candidate);
+	G.donePool = [];
+	G.donePool.push(candidate);
+	G.passButton.disabled = false;
+	G.court1.focus();
+}
+
+function knuthShuffle(arr) {
+	let rand;
+	for (let i = arr.length - 1; i > 0; i -= 1) {
+		rand = Math.floor((i + 1) * Math.random());	//get random between zero and i (inclusive)
+		let temp = arr[rand];
+		arr[rand] = arr[i];	//swap i (last element) with random element.
+		arr[i] = temp;
+	}
+	return arr;
+}
+
+function pass() {
+	let eArray = computer._getEntryArray(G.theme);
+	eArray = knuthShuffle(eArray);
+	for (let candidate of eArray) {
+		let e2 = candidate.slice(-G.restriction);
+		if (computer._getEntryArray(e2).length >= 1) {
+			G.displayArea.innerHTML = e2;
+			G.theme = e2;
+			G.counter++;
+			G.tArea.innerHTML = googleIt(G.counter + ".", candidate) + " " + makeLink(candidate) + "<br/>" + G.tArea.innerHTML;
+			G.court1.value = "";
+			computer.removeTheWord(candidate);
+			G.donePool.push(candidate);
+			G.court1.focus();
+			return;
+		}
+	}
+	alert("I can't think of any, sorry.");
+	G.court1.focus();
+}
+
+function googleIt(num, word) {
+	return "<a href='https://google.com/search?q=" + word + "' target='_blank'>" + num + "</a>";
+}
+
+function makeLink(word) {
+	return "<a href='https://ejje.weblio.jp/content/" + word + "' target='_blank'>" + word + "</a>";
+}
+
+G.court1.addEventListener("keydown", (e) => {
+	if (e.key == "Enter") {
+		let eWord = G.court1.value;
+		if (eWord == "") return;
+		let s2 = eWord.substr(0, G.restriction);
+		if (s2 != G.theme) {
+			alert("The word '" + eWord + "' does not begin with '" + G.theme + "'.");
+			G.court1.value = "";
+			return;
+		}
+		let dp = G.donePool.indexOf(eWord);
+		if (dp >= 0) {
+			alert("The word '" + eWord + "' already appeared at " + dp + ".");
+			G.court1.value = "";
+			return;
+		}
+		if (computer.checkTheWord(eWord)) {
+			let e2 = eWord.slice(-G.restriction);
+			G.displayArea.innerHTML = e2;
+			G.theme = e2;
+			G.counter++;
+			G.tArea.innerHTML = G.counter + ". " + eWord + "<br/>" + G.tArea.innerHTML;
+			computer.removeTheWord(eWord);
+			G.donePool.push(eWord);
+			pass();
+		} else {
+			alert("I don't know the word '" + eWord + "'.");
+		}
+	}
+});
+
+G.court1.focus();
+
+</script>
+</body>
+</html>
