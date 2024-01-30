@@ -48,6 +48,7 @@ class WordChainManager {
 	constructor(wordList) {
 		this.wordFinder = {};
 		for (const k of wordList) {
+			if (!(k.match(/^[a-zA-Z]+$/))) continue;
 			let s2 = k.substr(0, G.restriction);
 			if (s2.length < G.restriction) continue;
 			if (!(s2 in this.wordFinder)) {
