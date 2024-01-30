@@ -95,13 +95,14 @@ class WordChainManager {
 }
 
 let G = new GlobalManager();
-let computer = new WordChainManager(WordList);
+let computer;
 
 G.displayArea.innerHTML = "";
 G.court1.value = "";
 G.tArea.innerHTML = "";
 
 function gameStart() {
+	computer = new WordChainManager(WordList);
 	const keyArray = Object.keys(computer.wordFinder);
 	let s2;
 	let e2;
