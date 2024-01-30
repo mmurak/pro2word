@@ -21,7 +21,7 @@
 </head>
 <body>
 <input type="button" class="decor" value="Start" onclick="gameStart();"></input>
-<span style="float: right;">Powered by <a href="https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/English/Project_Gutenberg"  target="_blank">Project Gutenberg data（Wiktionary）</a></span>
+<span style="float: right;">Powered by <a href="https://github.com/cmusphinx/cmudict"  target="_blank">CMUdict</a></span>
 <br/>
 <label for="DISP1" class="decor">お題：</label><span id="DISP1" class="decor"></span>
 <br/>
@@ -29,7 +29,7 @@
 <input type="button" id="PassButton" class="decor"value="Pass" onclick="pass();" disabled></input>
 <br/>
 <div id="TextArea" class="decor"></div>
-<script src="./Gutenberg.js"></script>
+<script src="./iDict.js"></script>
 <script>
 class GlobalManager {
 	constructor() {
@@ -45,9 +45,19 @@ class GlobalManager {
 }
 
 class WordChainManager {
-	constructor(wordList) {
+	constructor(idict) {
 		this.wordFinder = {};
-		for (const k of wordList) {
+		let listOfWords = {};
+		for (const k in idict) {
+			const datArray = idict[k];
+			for (const ent of datArray) {
+				if (ent.match(/^[a-zA-Z]+$/)) {
+					listOfWords[ent] = 1;
+				}
+			}
+		}
+
+		for (const k in listOfWords) {
 			let s2 = k.substr(0, G.restriction);
 			if (s2.length < G.restriction) continue;
 			if (!(s2 in this.wordFinder)) {
@@ -95,7 +105,7 @@ class WordChainManager {
 }
 
 let G = new GlobalManager();
-let computer = new WordChainManager(WordList);
+let computer = new WordChainManager(iDict);
 
 G.displayArea.innerHTML = "";
 G.court1.value = "";
