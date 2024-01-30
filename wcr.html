@@ -21,13 +21,13 @@
 	</style>
 </head>
 <body>
-<input type="button" class="decor" value="Start" onclick="gameStart();"></input>
+<input type="button" class="decor" value="開始" onclick="gameStart();"></input>
 <span style="float: right;">Powered by <a href="https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/English/Project_Gutenberg"  target="_blank">Project Gutenberg data（Wiktionary）</a></span>
 <br/>
 <label for="DISP1" class="decor">お題：</label><span id="DISP1" class="decor"></span>
 <br/>
 <input type="textfield" id="Court1" class="decor"></input>
-<input type="button" id="PassButton" class="decor"value="Pass" onclick="pass();" disabled></input>
+<input type="button" id="PassButton" class="decor"value="パス" onclick="pass();" disabled></input>
 <br/>
 <div id="TextArea" class="decor"></div>
 <script src="./Gutenberg.js"></script>
@@ -47,8 +47,12 @@ class GlobalManager {
 
 class WordChainManager {
 	constructor(wordList) {
-		this.wordFinder = {};
+		let dupEraser = {};
 		for (const k of wordList) {
+			dupEraser[k.toLowerCase()] = 1;
+		}
+		this.wordFinder = {};
+		for (const k of Object.keys(dupEraser)) {
 			if (!(k.match(/^[a-zA-Z]+$/))) continue;
 			let s2 = k.substr(0, G.restriction);
 			if (s2.length < G.restriction) continue;
@@ -155,7 +159,7 @@ function pass() {
 			return;
 		}
 	}
-	alert("I can't think of any, sorry.");
+	alert("思いつきません。");
 	G.court1.focus();
 }
 
@@ -173,13 +177,13 @@ G.court1.addEventListener("keydown", (e) => {
 		if (eWord == "") return;
 		let s2 = eWord.substr(0, G.restriction);
 		if (s2 != G.theme) {
-			alert("The word '" + eWord + "' does not begin with '" + G.theme + "'.");
+			alert("'" + eWord + "' は '" + G.theme + "' で始まりません。");
 			G.court1.value = "";
 			return;
 		}
 		let dp = G.donePool.indexOf(eWord);
 		if (dp >= 0) {
-			alert("The word '" + eWord + "' already appeared at " + dp + ".");
+			alert("'" + eWord + "' は既に " + dp + " 番目に出てきています。");
 			G.court1.value = "";
 			return;
 		}
@@ -193,7 +197,7 @@ G.court1.addEventListener("keydown", (e) => {
 			G.donePool.push(eWord);
 			pass();
 		} else {
-			alert("I don't know the word '" + eWord + "'.");
+			alert("この単語を知りません： '" + eWord + "'。");
 		}
 	}
 });
