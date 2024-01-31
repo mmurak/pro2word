@@ -27,7 +27,7 @@
 <label for="DISP1" class="decor">お題：</label><span id="DISP1" class="decor"></span>
 <br/>
 <input type="textfield" id="Court1" class="decor"></input>
-<input type="button" id="PassButton" class="decor"value="パス" onclick="pass();" disabled></input>
+<input type="button" id="PassButton" class="decor"value="パス" onclick="pass(0);" disabled></input>
 <br/>
 <div id="TextArea" class="decor"></div>
 <script src="./Gutenberg.js"></script>
@@ -47,12 +47,8 @@ class GlobalManager {
 
 class WordChainManager {
 	constructor(wordList) {
-		let dupEraser = {};
-		for (const k of wordList) {
-			dupEraser[k.toLowerCase()] = 1;
-		}
 		this.wordFinder = {};
-		for (const k of Object.keys(dupEraser)) {
+		for (const k of wordList) {
 			if (!(k.match(/^[a-zA-Z]+$/))) continue;
 			let s2 = k.substr(0, G.restriction);
 			if (s2.length < G.restriction) continue;
@@ -126,7 +122,7 @@ function gameStart() {
 	G.court1.value = "";
 	computer.removeTheWord(candidate);
 	G.donePool = [];
-	G.donePool.push(candidate);
+//	G.donePool.push(candidate);
 	G.passButton.disabled = false;
 	G.court1.focus();
 }
@@ -142,12 +138,13 @@ function knuthShuffle(arr) {
 	return arr;
 }
 
-function pass() {
+function pass(parm) {
+	G.passButton.disabled = false;
 	let eArray = computer._getEntryArray(G.theme);
 	eArray = knuthShuffle(eArray);
 	for (let candidate of eArray) {
 		let e2 = candidate.slice(-G.restriction);
-		if (computer._getEntryArray(e2).length >= 1) {
+		if (computer._getEntryArray(e2).length > parm) {
 			G.displayArea.innerHTML = e2;
 			G.theme = e2;
 			G.counter++;
@@ -196,7 +193,8 @@ G.court1.addEventListener("keydown", (e) => {
 			G.tArea.innerHTML = G.counter + ". " + eWord + "<br/>" + G.tArea.innerHTML;
 			computer.removeTheWord(eWord);
 			G.donePool.push(eWord);
-			pass();
+			setTimeout(pass, Math.trunc(Math.random() * 1000) + 1000, 0);
+			G.passButton.disabled = true;
 		} else {
 			alert("この単語を知りません： '" + eWord + "'。");
 		}
