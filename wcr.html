@@ -27,7 +27,7 @@
 <label for="DISP1" class="decor">お題：</label><span id="DISP1" class="decor"></span>
 <br/>
 <input type="textfield" id="Court1" class="decor"></input>
-<input type="button" id="PassButton" class="decor"value="パス" onclick="pass(0);" disabled></input>
+<input type="button" id="PassButton" class="decor"value="パス" onclick="pass(1);" disabled></input>
 <br/>
 <div id="TextArea" class="decor"></div>
 <script src="./Gutenberg.js"></script>
@@ -156,7 +156,7 @@ function pass(parm) {
 			return;
 		}
 	}
-	alert("思いつきません。");
+	alert("詰みました。");
 	G.court1.value = "";
 	G.court1.focus();
 }
@@ -193,7 +193,7 @@ G.court1.addEventListener("keydown", (e) => {
 			G.tArea.innerHTML = G.counter + ". " + eWord + "<br/>" + G.tArea.innerHTML;
 			computer.removeTheWord(eWord);
 			G.donePool.push(eWord);
-			setTimeout(pass, Math.trunc(Math.random() * 1000) + 1000, 0);
+			setTimeout(pass, Math.trunc(Math.random() * 1000) + 1000, 1);
 			G.passButton.disabled = true;
 		} else {
 			alert("この単語を知りません： '" + eWord + "'。");
