@@ -22,15 +22,15 @@
 </head>
 <body>
 <input type="button" class="decor" value="開始" onclick="gameStart();"></input>
-<span style="float: right;">Powered by <a href="https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/English/Project_Gutenberg"  target="_blank">Project Gutenberg data（Wiktionary）</a></span>
+<span style="float: right;">Data from <a href="https://github.com/davidruffner/scrabble-word-finder"  target="_blank">davidruffner's scrabble-word-finder （GitHub）</a></span>
 <br/>
-<label for="DISP1" class="decor">お題：</label><span id="DISP1" class="decor"></span>
+<label for="DISP1" id="TheTheme" class="decor">お題：</label><span id="DISP1" class="decor"></span>
 <br/>
 <input type="textfield" id="Court1" class="decor"></input>
 <input type="button" id="PassButton" class="decor"value="パス" onclick="pass(1);" disabled></input>
 <br/>
 <div id="TextArea" class="decor"></div>
-<script src="./Gutenberg.js"></script>
+<script src="./wordlist.js"></script>
 <script>
 class GlobalManager {
 	constructor() {
@@ -199,6 +199,9 @@ G.court1.addEventListener("keydown", (e) => {
 			alert("この単語を知りません： '" + eWord + "'。");
 		}
 	}
+});
+
+document.getElementById("TheTheme").addEventListener("click", (e) => {
 });
 
 window.addEventListener("focus", (e) => {
