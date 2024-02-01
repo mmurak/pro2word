@@ -22,6 +22,7 @@
 </head>
 <body>
 <input type="button" class="decor" value="開始" onclick="gameStart();"></input>
+<span id="ScoreArea" class="decor"></span>
 <span style="float: right;">Data from <a href="https://github.com/davidruffner/scrabble-word-finder"  target="_blank">davidruffner's scrabble-word-finder （GitHub）</a></span>
 <br/>
 <label for="DISP1" id="TheTheme" class="decor">お題：</label><span id="DISP1" class="decor"></span>
@@ -35,6 +36,7 @@
 class GlobalManager {
 	constructor() {
 		this.displayArea = document.getElementById("DISP1");
+		this.scoreArea = document.getElementById("ScoreArea");
 		this.court1 = document.getElementById("Court1");
 		this.passButton = document.getElementById("PassButton");
 		this.tArea = document.getElementById("TextArea");
@@ -42,6 +44,8 @@ class GlobalManager {
 		this.theme = "";
 		this.restriction = 2;
 		this.donePool = [];
+		this.humanScore = 0;
+		this.computerScore = 0;
 	}
 }
 
@@ -125,6 +129,9 @@ function gameStart() {
 //	G.donePool.push(candidate);
 	G.passButton.disabled = false;
 	G.court1.focus();
+	G.humanScore = 0;
+	G.computerScore = 0;
+	displayScore();
 }
 
 function knuthShuffle(arr) {
@@ -153,6 +160,8 @@ function pass(parm) {
 			computer.removeTheWord(candidate);
 			G.donePool.push(candidate);
 			G.court1.focus();
+			G.computerScore += calculateScore(candidate);
+			displayScore();
 			return;
 		}
 	}
@@ -167,6 +176,26 @@ function googleIt(num, word) {
 
 function makeLink(word) {
 	return "<a href='https://ejje.weblio.jp/content/" + word + "' target='_blank'>" + word + "</a>";
+}
+
+function displayScore() {
+	G.scoreArea.innerHTML = "&nbsp;スコア&nbsp;" + G.humanScore + " : " + G.computerScore;
+}
+
+function calculateScore(str) {
+	const scoreTable = {
+		"a": 1, "b": 3, "c": 3, "d": 2, "e": 1, "f":4, "g":2,
+		"h": 4, "i": 1, "j": 8, "k": 5, "l": 1, "m": 3, "n": 1,
+		"o": 1, "p": 3, "q": 10, "r": 1, "s": 1, "t": 1, "u": 1,
+		"v": 4, "w": 4, "x": 8, "y": 4, "z": 10,
+	};
+	let score = 0;
+	for (const c of str.split("")) {
+		if (c in scoreTable) {
+			score += scoreTable[c];
+		}
+	}
+	return score;
 }
 
 G.court1.addEventListener("keydown", (e) => {
@@ -193,6 +222,8 @@ G.court1.addEventListener("keydown", (e) => {
 			G.tArea.innerHTML = G.counter + ". " + eWord + "<br/>" + G.tArea.innerHTML;
 			computer.removeTheWord(eWord);
 			G.donePool.push(eWord);
+			G.humanScore += calculateScore(eWord);
+			displayScore();
 			setTimeout(pass, Math.trunc(Math.random() * 1000) + 1000, 1);
 			G.passButton.disabled = true;
 		} else {
@@ -209,6 +240,7 @@ window.addEventListener("focus", (e) => {
 });
 
 G.court1.focus();
+displayScore();
 
 </script>
 </body>
