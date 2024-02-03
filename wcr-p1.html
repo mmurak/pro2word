@@ -1,8 +1,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 <head>
-	<title>Word to Pronunciation Search (Br.E)</title>
+	<title>Word Chain Rally - Consonant</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="shortcut icon" href="kiwi-bird.png">
 	<style>
 		.decor{
 			font-size: 100%;
@@ -20,20 +21,227 @@
 	</style>
 </head>
 <body>
-<input type="button" class="decor" value="Start" onclick="gameStart();"></input>
-<span style="float: right;">Powered by <a href="https://github.com/cmusphinx/cmudict"  target="_blank">CMUdict</a></span>
+<input type="button" class="decor" value="開始" onclick="gameStart();"></input>
+<span id="ScoreArea" class="decor"></span>
+<span style="float: right;">Data from <a href="https://github.com/davidruffner/scrabble-word-finder"  target="_blank">davidruffner's scrabble-word-finder （GitHub）</a></span>
 <br/>
-<label for="DISP1" class="decor">お題：</label><span id="DISP1" class="decor"></span>
+<label for="DISP1" id="TheTheme" class="decor">お題：</label><span id="DISP1" class="decor"></span>
 <br/>
 <input type="textfield" id="Court1" class="decor"></input>
-<input type="button" id="PassButton" class="decor"value="Pass" onclick="pass();" disabled></input>
+<input type="button" id="PassButton" class="decor"value="パス" onclick="pass(1);" disabled></input>
 <br/>
 <div id="TextArea" class="decor"></div>
-<script src="./iDict.js"></script>
+<script src="./wordlist.js"></script>
 <script>
+
+// mt.js 0.2.4 (2005-12-23)
+
+/*
+
+Mersenne Twister in JavaScript based on "mt19937ar.c"
+
+ * JavaScript version by Magicant: Copyright (C) 2005 Magicant
+
+
+ * Original C version by Makoto Matsumoto and Takuji Nishimura
+   http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/mt.html
+
+Copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura,
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+  1. Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the distribution.
+
+  3. The names of its contributors may not be used to endorse or promote 
+     products derived from this software without specific prior written 
+     permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+*/
+
+
+// Methods whose name starts with "_" are private methods.
+// Don't call them externally!
+
+
+/**
+ * Constructor: MersenneTwister([integer/Array<integer> seed])
+ * initializes the object with the given seed.
+ * The seed may be an integer or an array of integers.
+ * If the seed is not given, the object will be initialized with the current
+ * time: new Date().getTime().
+ * See also: setSeed(seed).
+ */
+function MersenneTwister(seed) {
+	if (arguments.length == 0)
+		seed = new Date().getTime();
+	
+	this._mt = new Array(624);
+	this.setSeed(seed);
+}
+
+/** multiplies two uint32 values and returns a uint32 result. */
+MersenneTwister._mulUint32 = function(a, b) {
+	var a1 = a >>> 16, a2 = a & 0xffff;
+	var b1 = b >>> 16, b2 = b & 0xffff;
+	return (((a1 * b2 + a2 * b1) << 16) + a2 * b2) >>> 0;
+};
+
+/** returns ceil(value) if value is finite number, otherwise 0. */
+MersenneTwister._toNumber = function(x) {
+	return (typeof x == "number" && !isNaN(x)) ? Math.ceil(x) : 0;
+};
+
+/**
+ * Method: setSeed(integer/Array<integer> seed)
+ * resets the seed. The seed may be an integer or an array of integers.
+ * Elements in the seed array that are not numbers will be treated as 0.
+ * Numbers that are not integers will be rounded down.
+ * The integer(s) should be greater than or equal to 0 and less than 2^32.
+ * This method is compatible with init_genrand and init_by_array function of
+ * the original C version.
+ */
+MersenneTwister.prototype.setSeed = function(seed) {
+	var mt = this._mt;
+	if (typeof seed == "number") {
+		mt[0] = seed >>> 0;
+		for (var i = 1; i < mt.length; i++) {
+			var x = mt[i-1] ^ (mt[i-1] >>> 30);
+			mt[i] = MersenneTwister._mulUint32(1812433253, x) + i;
+		}
+		this._index = mt.length;
+	} else if (seed instanceof Array) {
+		var i = 1, j = 0;
+		this.setSeed(19650218);
+		for (var k = Math.max(mt.length, seed.length); k > 0; k--) {
+			var x = mt[i-1] ^ (mt[i-1] >>> 30);
+			x = MersenneTwister._mulUint32(x, 1664525);
+			mt[i] = (mt[i] ^ x) + (seed[j] >>> 0) + j;
+			if (++i >= mt.length) {
+				mt[0] = mt[mt.length-1];
+				i = 1;
+			}
+			if (++j >= seed.length) {
+				j = 0;
+			}
+		}
+		for (var k = mt.length - 1; k > 0; k--) {
+			var x = mt[i-1] ^ (mt[i-1] >>> 30);
+			x = MersenneTwister._mulUint32(x, 1566083941);
+			mt[i] = (mt[i] ^ x) - i;
+			if (++i >= mt.length) {
+				mt[0] = mt[mt.length-1];
+				i = 1;
+			}
+		}
+		mt[0] = 0x80000000;
+	} else {
+		throw new TypeError("MersenneTwister: illegal seed.");
+	}
+};
+
+/** returns the next random Uint32 value. */
+MersenneTwister.prototype._nextInt = function() {
+	var mt = this._mt, value;
+	
+	if (this._index >= mt.length) {
+		var k = 0, N = mt.length, M = 397;
+		do {
+			value = (mt[k] & 0x80000000) | (mt[k+1] & 0x7fffffff);
+			mt[k] = mt[k+M] ^ (value >>> 1) ^ ((value & 1) ? 0x9908b0df : 0);
+		} while (++k < N-M);
+		do {
+			value = (mt[k] & 0x80000000) | (mt[k+1] & 0x7fffffff);
+			mt[k] = mt[k+M-N] ^ (value >>> 1) ^ ((value & 1) ? 0x9908b0df : 0);
+		} while (++k < N-1);
+		value = (mt[N-1] & 0x80000000) | (mt[0] & 0x7fffffff);
+		mt[N-1] = mt[M-1] ^ (value >>> 1) ^ ((value & 1) ? 0x9908b0df : 0);
+		this._index = 0;
+	}
+	
+	value = mt[this._index++];
+	value ^=  value >>> 11;
+	value ^= (value <<   7) & 0x9d2c5680;
+	value ^= (value <<  15) & 0xefc60000;
+	value ^=  value >>> 18;
+	return value >>> 0;
+};
+
+/**
+ * Method: nextInt([[number min,] number max])
+ * returns a random integer that is greater than or equal to min and less than
+ * max. The value of (max - min) must be positive number less or equal to 2^32.
+ * If min is not given or not a number, this method uses 0 for min.
+ * If neither of min and max is given or max is out of range, this method
+ * uses 2^32 for max.
+ * This method is compatible with genrand_int32 function of the original C
+ * version for min=0 & max=2^32, but not with genrand_int31 function.
+ */
+MersenneTwister.prototype.nextInt = function() {
+	var min, sup;
+	switch (arguments.length) {
+	case 0:
+		return this._nextInt();
+	case 1:
+		min = 0;
+		sup = MersenneTwister._toNumber(arguments[0]);
+		break;
+	default:
+		min = MersenneTwister._toNumber(arguments[0]);
+		sup = MersenneTwister._toNumber(arguments[1]) - min;
+		break;
+	}
+	
+	if (!(0 < sup && sup < 0x100000000))
+		return this._nextInt() + min;
+	if ((sup & (~sup + 1)) == sup)
+		return ((sup - 1) & this._nextInt()) + min;
+	
+	var value;
+	do {
+		value = this._nextInt();
+	} while (sup > 4294967296 - (value - (value %= sup)));
+	return value + min;
+};
+
+/**
+ * Method: next()
+ * returns a random number that is greater than or equal to 0 and less than 1.
+ * This method is compatible with genrand_res53 function of the original C
+ * version.
+ */
+MersenneTwister.prototype.next = function() {
+	var a = this._nextInt() >>> 5, b = this._nextInt() >>> 6;
+	return (a * 0x4000000 + b) / 0x20000000000000; 
+};
+
+// End of mt.js 0.2.4 (2005-12-23)
+
+
+
 class GlobalManager {
 	constructor() {
 		this.displayArea = document.getElementById("DISP1");
+		this.scoreArea = document.getElementById("ScoreArea");
 		this.court1 = document.getElementById("Court1");
 		this.passButton = document.getElementById("PassButton");
 		this.tArea = document.getElementById("TextArea");
@@ -41,24 +249,20 @@ class GlobalManager {
 		this.theme = "";
 		this.restriction = 2;
 		this.donePool = [];
+		this.humanScore = 0;
+		this.computerScore = 0;
+		this.mt = new MersenneTwister();
 	}
 }
 
 class WordChainManager {
-	constructor(idict) {
+	constructor(wordList) {
 		this.wordFinder = {};
-		let listOfWords = {};
-		for (const k in idict) {
-			const datArray = idict[k];
-			for (const ent of datArray) {
-				if (ent.match(/^[a-zA-Z]+$/)) {
-					listOfWords[ent] = 1;
-				}
-			}
-		}
-
-		for (const k in listOfWords) {
-			let s2 = k.substr(0, G.restriction);
+		for (let k of wordList) {
+			k = k.toLowerCase();
+			let cWord = consonantalize(k);
+			if (!(cWord.match(/^[a-z]+$/))) continue;
+			let s2 = cWord.substr(0, G.restriction);
 			if (s2.length < G.restriction) continue;
 			if (!(s2 in this.wordFinder)) {
 				this.wordFinder[s2] = k;
@@ -69,12 +273,12 @@ class WordChainManager {
 	}
 
 	getTheWord(str) {
-		const s2 = str.substr(0, G.restriction);
+		const s2 = consonantalize(str).substr(0, G.restriction);
 		const eArray = this._getEntryArray(s2);
-		return eArray[Math.trunc(Math.random() * eArray.length)];
+		return eArray[G.mt.nextInt(0, eArray.length)];
 	}
 	removeTheWord(str) {
-		const s2 = str.substr(0, G.restriction);
+		const s2 = consonantalize(str).substr(0, G.restriction);
 		let eArray = this._getEntryArray(s2);
 		const b4n = eArray.length;
 		eArray = eArray.filter(n => n !== str);
@@ -98,29 +302,31 @@ class WordChainManager {
 		return entries.split(":");
 	}
 	checkTheWord(str) {
-		const s2 = str.substr(0, G.restriction);
+		const s2 = consonantalize(str).substr(0, G.restriction);
 		let arr = this._getEntryArray(s2);
 		return arr.indexOf(str) >= 0;
 	}
 }
 
 let G = new GlobalManager();
-let computer = new WordChainManager(iDict);
+let computer;
 
 G.displayArea.innerHTML = "";
 G.court1.value = "";
 G.tArea.innerHTML = "";
 
 function gameStart() {
+	G.mt.setSeed(Date.now());
+	computer = new WordChainManager(WordList);
 	const keyArray = Object.keys(computer.wordFinder);
 	let s2;
 	let e2;
 	let candidate;
 	do {
-		const sidx = Math.trunc(Math.random() * keyArray.length);
+		const sidx = G.mt.nextInt(0, keyArray.length);
 		s2 = keyArray[sidx];
 		candidate = computer.getTheWord(s2);
-		e2 = candidate.slice(-G.restriction);
+		e2 = consonantalize(candidate).slice(-G.restriction);
 	} while (computer._getEntryArray(e2).length <= 1);
 	G.displayArea.innerHTML = e2;
 	G.theme = e2;
@@ -129,15 +335,18 @@ function gameStart() {
 	G.court1.value = "";
 	computer.removeTheWord(candidate);
 	G.donePool = [];
-	G.donePool.push(candidate);
+//	G.donePool.push(candidate);
 	G.passButton.disabled = false;
 	G.court1.focus();
+	G.humanScore = 0;
+	G.computerScore = 0;
+	displayScore();
 }
 
 function knuthShuffle(arr) {
 	let rand;
 	for (let i = arr.length - 1; i > 0; i -= 1) {
-		rand = Math.floor((i + 1) * Math.random());	//get random between zero and i (inclusive)
+		rand = G.mt.nextInt(0, (i + 1));	//get random between zero and i (inclusive)
 		let temp = arr[rand];
 		arr[rand] = arr[i];	//swap i (last element) with random element.
 		arr[i] = temp;
@@ -145,12 +354,13 @@ function knuthShuffle(arr) {
 	return arr;
 }
 
-function pass() {
+function pass(parm) {
+	G.passButton.disabled = false;
 	let eArray = computer._getEntryArray(G.theme);
 	eArray = knuthShuffle(eArray);
 	for (let candidate of eArray) {
-		let e2 = candidate.slice(-G.restriction);
-		if (computer._getEntryArray(e2).length >= 1) {
+		let e2 = consonantalize(candidate).slice(-G.restriction);
+		if (computer._getEntryArray(e2).length > parm) {
 			G.displayArea.innerHTML = e2;
 			G.theme = e2;
 			G.counter++;
@@ -159,10 +369,13 @@ function pass() {
 			computer.removeTheWord(candidate);
 			G.donePool.push(candidate);
 			G.court1.focus();
+			G.computerScore += calculateScore(candidate);
+			displayScore();
 			return;
 		}
 	}
-	alert("I can't think of any, sorry.");
+	alert("詰みました。");
+	G.court1.value = "";
 	G.court1.focus();
 }
 
@@ -174,42 +387,72 @@ function makeLink(word) {
 	return "<a href='https://ejje.weblio.jp/content/" + word + "' target='_blank'>" + word + "</a>";
 }
 
+function displayScore() {
+	G.scoreArea.innerHTML = "&nbsp;スコア&nbsp;" + G.humanScore + " : " + G.computerScore;
+}
+
+function calculateScore(str) {
+	const scoreTable = {
+		"a": 1, "b": 3, "c": 3, "d": 2, "e": 1, "f":4, "g":2,
+		"h": 4, "i": 1, "j": 8, "k": 5, "l": 1, "m": 3, "n": 1,
+		"o": 1, "p": 3, "q": 10, "r": 1, "s": 1, "t": 1, "u": 1,
+		"v": 4, "w": 4, "x": 8, "y": 4, "z": 10,
+	};
+	let score = 0;
+	for (const c of str.split("")) {
+		if (c in scoreTable) {
+			score += scoreTable[c];
+		}
+	}
+	return score;
+}
+
+function consonantalize(str) {
+	return str.replaceAll(/[aeiou]/gi, "");
+}
+
 G.court1.addEventListener("keydown", (e) => {
 	if (e.key == "Enter") {
 		let eWord = G.court1.value.toLowerCase();
 		if (eWord == "") return;
-		let s2 = eWord.substr(0, G.restriction);
+		let s2 = consonantalize(eWord).substr(0, G.restriction);
 		if (s2 != G.theme) {
-			alert("The word '" + eWord + "' does not begin with '" + G.theme + "'.");
+			alert("'" + eWord + "' は '" + G.theme + "' で始まりません。");
 			G.court1.value = "";
 			return;
 		}
 		let dp = G.donePool.indexOf(eWord);
 		if (dp >= 0) {
-			alert("The word '" + eWord + "' already appeared at " + dp + ".");
+			alert("'" + eWord + "' は既に " + dp + " 番目に出てきています。");
 			G.court1.value = "";
 			return;
 		}
 		if (computer.checkTheWord(eWord)) {
-			let e2 = eWord.slice(-G.restriction);
+			let e2 = consonantalize(eWord).slice(-G.restriction);
 			G.displayArea.innerHTML = e2;
 			G.theme = e2;
 			G.counter++;
 			G.tArea.innerHTML = G.counter + ". " + eWord + "<br/>" + G.tArea.innerHTML;
 			computer.removeTheWord(eWord);
 			G.donePool.push(eWord);
-			pass();
+			G.humanScore += calculateScore(eWord);
+			displayScore();
+			setTimeout(pass, G.mt.nextInt(0, 1000), 1);
+			G.passButton.disabled = true;
 		} else {
-			alert("I don't know the word '" + eWord + "'.");
+			alert("この単語を知りません： '" + eWord + "'。");
 		}
 	}
 });
+
 
 window.addEventListener("focus", (e) => {
 	G.court1.focus();
 });
 
 G.court1.focus();
+displayScore();
+
 
 </script>
 </body>
