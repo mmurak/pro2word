@@ -423,7 +423,7 @@ G.court1.addEventListener("keydown", (e) => {
 		}
 		let dp = G.donePool.indexOf(eWord);
 		if (dp >= 0) {
-			alert("'" + eWord + "' は既に " + dp + " 番目に出てきています。");
+			alert("'" + eWord + "' は既に " + (dp+1) + " 番目に出てきています。");
 			G.court1.value = "";
 			return;
 		}
