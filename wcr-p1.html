@@ -25,6 +25,7 @@
 <span id="ScoreArea" class="decor"></span>
 <span style="float: right;">Data from <a href="https://github.com/davidruffner/scrabble-word-finder"  target="_blank">davidruffner's scrabble-word-finder （GitHub）</a></span>
 <br/>
+<span id="Face" class="decor"></span>
 <label for="DISP1" id="TheTheme" class="decor">お題：</label><span id="DISP1" class="decor"></span>
 <br/>
 <input type="textfield" id="Court1" class="decor"></input>
@@ -252,6 +253,9 @@ class GlobalManager {
 		this.humanScore = 0;
 		this.computerScore = 0;
 		this.mt = new MersenneTwister();
+		this.passCount = 0;
+		this.face = document.getElementById("Face");
+		this.passChar = ["😃", "😑", "😱", "☠️", ];
 	}
 }
 
@@ -335,11 +339,12 @@ function gameStart() {
 	G.court1.value = "";
 	computer.removeTheWord(candidate);
 	G.donePool = [];
-//	G.donePool.push(candidate);
 	G.passButton.disabled = false;
+	G.court1.disabled = false;
 	G.court1.focus();
 	G.humanScore = 0;
 	G.computerScore = 0;
+	G.passCount = 0;
 	displayScore();
 }
 
@@ -355,7 +360,20 @@ function knuthShuffle(arr) {
 }
 
 function pass(parm) {
-	G.passButton.disabled = false;
+	G.passCount++;
+	if (G.passCount > 2) {
+		setTimeout(finalResult, 500);
+	}
+	computerTurn(parm);
+}
+
+function finalResult() {
+	G.passButton.disabled = true;
+	G.court1.disabled = true;
+	alert("スコア：" + G.humanScore + " : " + G.computerScore);
+}
+
+function computerTurn(parm) {
 	let eArray = computer._getEntryArray(G.theme);
 	eArray = knuthShuffle(eArray);
 	for (let candidate of eArray) {
@@ -371,6 +389,7 @@ function pass(parm) {
 			G.court1.focus();
 			G.computerScore += calculateScore(candidate);
 			displayScore();
+			G.passButton.disabled = false;
 			return;
 		}
 	}
@@ -388,6 +407,7 @@ function makeLink(word) {
 }
 
 function displayScore() {
+	G.face.innerHTML = G.passChar[G.passCount];
 	G.scoreArea.innerHTML = "&nbsp;スコア&nbsp;" + G.humanScore + " : " + G.computerScore;
 }
 
@@ -417,7 +437,7 @@ G.court1.addEventListener("keydown", (e) => {
 		if (eWord == "") return;
 		let s2 = consonantalize(eWord).substr(0, G.restriction);
 		if (s2 != G.theme) {
-			alert("'" + eWord + "' は '" + G.theme + "' で始まりません。");
+			alert("'" + eWord + "' の最初の子音2字は '" + G.theme + "' になっていません。");
 			G.court1.value = "";
 			return;
 		}
@@ -437,7 +457,7 @@ G.court1.addEventListener("keydown", (e) => {
 			G.donePool.push(eWord);
 			G.humanScore += calculateScore(eWord);
 			displayScore();
-			setTimeout(pass, G.mt.nextInt(0, 1000), 1);
+			setTimeout(computerTurn, G.mt.nextInt(0, 1000), 1);
 			G.passButton.disabled = true;
 		} else {
 			alert("この単語を知りません： '" + eWord + "'。");
